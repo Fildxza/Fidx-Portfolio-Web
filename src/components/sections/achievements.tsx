@@ -16,7 +16,7 @@ export async function Achievements() {
           {achievements.map((achievement) => (
             <div
               key={achievement.id}
-              className="flex items-start gap-4 rounded-2xl border border-border/60 bg-card/50 p-5"
+              className="flex items-start gap-4 rounded-2xl border border-border/60 bg-card/50 p-5 transition-all hover:-translate-y-1 hover:border-brand/40 hover:shadow-lg hover:shadow-black/5"
             >
               <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand">
                 <Trophy className="size-5" />

@@ -8,7 +8,7 @@ import type { FeaturedProject } from "@/lib/types";
 
 export function ProjectCard({ project }: { project: FeaturedProject }) {
   return (
-    <div className="group flex flex-col overflow-hidden rounded-2xl border border-border/60 bg-card/50 transition-all hover:-translate-y-1 hover:border-brand/40 hover:shadow-xl hover:shadow-black/5">
+    <div className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border/60 border-t-2 border-t-transparent bg-card/50 transition-all hover:-translate-y-1 hover:border-brand/40 hover:border-t-brand hover:shadow-xl hover:shadow-black/5">
       <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-brand/15 to-transparent">
         {project.imageUrl ? (
           <Image
@@ -23,6 +23,11 @@ export function ProjectCard({ project }: { project: FeaturedProject }) {
           </div>
         )}
 
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/0 to-black/0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        />
+
         <div className="absolute right-3 top-3 flex items-center gap-1.5">
           {project.isPrivate ? (
             <div className="flex items-center gap-1 rounded-full bg-background/80 px-2.5 py-1 text-xs font-medium backdrop-blur">
@@ -31,7 +36,7 @@ export function ProjectCard({ project }: { project: FeaturedProject }) {
           ) : (
             project.stars !== null && (
               <div className="flex items-center gap-1 rounded-full bg-background/80 px-2.5 py-1 text-xs font-medium backdrop-blur">
-                <Star className="size-3" /> {project.stars}
+                <Star className="size-3 fill-brand text-brand" /> {project.stars}
               </div>
             )
           )}

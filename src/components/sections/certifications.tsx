@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Award, ExternalLink, FileText } from "lucide-react";
+import { Award, BadgeCheck, ExternalLink, FileText } from "lucide-react";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { getCertificates } from "@/lib/queries";
 import { formatMonthYear } from "@/lib/format";
@@ -18,9 +18,9 @@ export async function Certifications() {
           {certificates.map((cert) => (
             <div
               key={cert.id}
-              className="flex items-center gap-4 rounded-2xl border border-border/60 bg-card/50 p-5"
+              className="flex items-center gap-4 rounded-2xl border border-border/60 bg-card/50 p-5 transition-all hover:-translate-y-1 hover:border-brand/40 hover:shadow-lg hover:shadow-black/5"
             >
-              <div className="flex size-14 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-brand/10 text-brand">
+              <div className="relative flex size-14 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-brand/10 text-brand">
                 {cert.image_url ? (
                   <Image
                     src={cert.image_url}
@@ -31,6 +31,9 @@ export async function Certifications() {
                   />
                 ) : (
                   <Award className="size-6" />
+                )}
+                {cert.credential_url && (
+                  <BadgeCheck className="absolute -bottom-1 -right-1 size-4.5 rounded-full bg-background text-brand" />
                 )}
               </div>
 

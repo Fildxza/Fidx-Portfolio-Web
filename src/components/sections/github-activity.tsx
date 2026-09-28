@@ -2,7 +2,10 @@ import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
 import { BookMarked, GitCommitHorizontal, Star, Users } from "lucide-react";
 import { SectionHeading } from "@/components/shared/section-heading";
+import { Reveal, StaggerGroup, StaggerItem } from "@/components/shared/reveal";
+import { CountUp } from "@/components/shared/count-up";
 import { getGithubStats, getRecentActivity } from "@/lib/github";
+import { getLanguageColor } from "@/lib/language-colors";
 import { siteConfig } from "@/lib/constants";
 
 const STAT_ICONS = {
@@ -34,44 +37,55 @@ export async function GithubActivity() {
         />
 
         <div className="grid gap-6 lg:grid-cols-3">
-          <div className="grid grid-cols-3 gap-4 lg:col-span-3">
+          <StaggerGroup className="grid grid-cols-3 gap-4 lg:col-span-3">
             {statItems.map((stat) => (
-              <div
+              <StaggerItem
                 key={stat.label}
                 className="rounded-2xl border border-border/60 bg-card/50 p-5 text-center"
               >
                 <stat.icon className="mx-auto mb-2 size-5 text-brand" />
-                <p className="text-2xl font-semibold">{stat.value}</p>
+                <p className="text-2xl font-semibold">
+                  <CountUp value={stat.value} />
+                </p>
                 <p className="text-xs text-muted-foreground">{stat.label}</p>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerGroup>
 
           {stats.topLanguages.length > 0 && (
-            <div className="rounded-2xl border border-border/60 bg-card/50 p-6 lg:col-span-2">
+            <Reveal className="rounded-2xl border border-border/60 bg-card/50 p-6 lg:col-span-2">
               <h3 className="mb-4 text-sm font-medium uppercase tracking-wide text-muted-foreground">
                 Top Languages
               </h3>
               <div className="space-y-3">
                 {stats.topLanguages.map((lang) => (
                   <div key={lang.name}>
-                    <div className="mb-1 flex justify-between text-sm">
-                      <span>{lang.name}</span>
+                    <div className="mb-1 flex items-center justify-between text-sm">
+                      <span className="flex items-center gap-1.5">
+                        <span
+                          className="size-2 rounded-full"
+                          style={{ backgroundColor: getLanguageColor(lang.name) }}
+                        />
+                        {lang.name}
+                      </span>
                       <span className="text-muted-foreground">{lang.count} repos</span>
                     </div>
                     <div className="h-1.5 overflow-hidden rounded-full bg-muted">
                       <div
-                        className="h-full rounded-full bg-brand"
-                        style={{ width: `${(lang.count / maxLanguageCount) * 100}%` }}
+                        className="h-full rounded-full"
+                        style={{
+                          width: `${(lang.count / maxLanguageCount) * 100}%`,
+                          backgroundColor: getLanguageColor(lang.name),
+                        }}
                       />
                     </div>
                   </div>
                 ))}
               </div>
-            </div>
+            </Reveal>
           )}
 
-          <div className="rounded-2xl border border-border/60 bg-card/50 p-6">
+          <Reveal delay={0.1} className="rounded-2xl border border-border/60 bg-card/50 p-6">
             <h3 className="mb-4 text-sm font-medium uppercase tracking-wide text-muted-foreground">
               Recent Commits
             </h3>
@@ -104,7 +118,7 @@ export async function GithubActivity() {
                 ))}
               </ul>
             )}
-          </div>
+          </Reveal>
         </div>
 
         <div className="mt-8 text-center">

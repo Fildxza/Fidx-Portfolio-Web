@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ExternalLink, Pin, Star, GitFork } from "lucide-react";
 import { GithubIcon } from "@/components/shared/brand-icons";
+import { getLanguageColor } from "@/lib/language-colors";
 import type { GithubRepo } from "@/lib/types";
 
 export function GithubRepoCard({ repo }: { repo: GithubRepo }) {
@@ -26,7 +27,10 @@ export function GithubRepoCard({ repo }: { repo: GithubRepo }) {
       <div className="flex items-center gap-4 text-xs text-muted-foreground">
         {repo.language && (
           <span className="flex items-center gap-1.5">
-            <span className="size-2 rounded-full bg-brand" />
+            <span
+              className="size-2 rounded-full"
+              style={{ backgroundColor: getLanguageColor(repo.language) }}
+            />
             {repo.language}
           </span>
         )}

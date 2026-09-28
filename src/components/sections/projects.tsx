@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { ProjectCard } from "@/components/sections/project-card";
 import { Button } from "@/components/ui/button";
+import { StaggerGroup, StaggerItem } from "@/components/shared/reveal";
 import { getProjects } from "@/lib/queries";
 import { getGithubRepos } from "@/lib/github";
 import { buildFeaturedProjects } from "@/lib/featured-projects";
@@ -21,11 +22,13 @@ export async function Projects() {
         />
 
         {featured.length > 0 && (
-          <div className="mb-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <StaggerGroup className="mb-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {featured.map((project) => (
-              <ProjectCard key={project.key} project={project} />
+              <StaggerItem key={project.key} className="h-full">
+                <ProjectCard project={project} />
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerGroup>
         )}
 
         <div className="flex justify-center">

@@ -1,7 +1,9 @@
 import { Briefcase } from "lucide-react";
 import { SectionHeading } from "@/components/shared/section-heading";
+import { TimelineItem, TimelineLine } from "@/components/sections/experience-motion";
 import { getExperience } from "@/lib/queries";
 import { formatDateRange } from "@/lib/format";
+import { cn } from "@/lib/utils";
 
 export async function Experience() {
   const experience = await getExperience();
@@ -16,15 +18,17 @@ export async function Experience() {
         />
 
         <div className="relative mx-auto max-w-3xl">
-          <div
-            aria-hidden
-            className="absolute left-[19px] top-2 bottom-2 hidden w-px bg-border sm:block"
-          />
+          <TimelineLine />
 
           <ol className="flex flex-col gap-10">
-            {experience.map((job) => (
-              <li key={job.id} className="relative flex gap-6">
-                <div className="hidden sm:flex size-10 shrink-0 items-center justify-center rounded-full border border-border bg-background text-brand">
+            {experience.map((job, index) => (
+              <TimelineItem key={job.id} index={index}>
+                <div
+                  className={cn(
+                    "hidden sm:flex size-10 shrink-0 items-center justify-center rounded-full border border-border bg-background text-brand",
+                    job.is_current && "ring-2 ring-brand/30 ring-offset-2 ring-offset-background"
+                  )}
+                >
                   <Briefcase className="size-4.5" />
                 </div>
 
@@ -45,7 +49,7 @@ export async function Experience() {
                     ))}
                   </ul>
                 </div>
-              </li>
+              </TimelineItem>
             ))}
           </ol>
         </div>

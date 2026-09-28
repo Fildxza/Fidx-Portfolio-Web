@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2, Mail, MapPin, Phone, Send } from "lucide-react";
+import { CheckCircle2, Loader2, Mail, MapPin, Phone, Send } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -57,28 +57,33 @@ export function Contact() {
 
         <div className="mx-auto grid max-w-4xl gap-10 lg:grid-cols-[0.8fr_1.2fr]">
           <div className="flex flex-col gap-4">
-            {CONTACT_ITEMS.map((item) => (
-              <div
-                key={item.label}
-                className="flex items-center gap-4 rounded-2xl border border-border/60 bg-card/50 p-5"
-              >
-                <div className="rounded-xl bg-brand/10 p-2.5 text-brand">
-                  <item.icon className="size-5" />
-                </div>
-                <div>
-                  <p className="text-xs uppercase tracking-wide text-muted-foreground">
-                    {item.label}
-                  </p>
-                  {item.href ? (
-                    <a href={item.href} className="font-medium hover:text-brand">
-                      {item.value}
-                    </a>
-                  ) : (
+            {CONTACT_ITEMS.map((item) => {
+              const content = (
+                <>
+                  <div className="rounded-xl bg-brand/10 p-2.5 text-brand">
+                    <item.icon className="size-5" />
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-wide text-muted-foreground">
+                      {item.label}
+                    </p>
                     <p className="font-medium">{item.value}</p>
-                  )}
+                  </div>
+                </>
+              );
+              const className =
+                "flex items-center gap-4 rounded-2xl border border-border/60 bg-card/50 p-5 transition-all hover:-translate-y-1 hover:border-brand/40 hover:shadow-lg hover:shadow-black/5";
+
+              return item.href ? (
+                <a key={item.label} href={item.href} className={className}>
+                  {content}
+                </a>
+              ) : (
+                <div key={item.label} className={className}>
+                  {content}
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <form
@@ -88,14 +93,25 @@ export function Contact() {
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="flex flex-col gap-1.5">
                 <Label htmlFor="name">Name</Label>
-                <Input id="name" placeholder="Your name" {...register("name")} />
+                <Input
+                  id="name"
+                  placeholder="Your name"
+                  className="focus-visible:border-brand focus-visible:ring-brand/30"
+                  {...register("name")}
+                />
                 {errors.name && (
                   <p className="text-xs text-destructive">{errors.name.message}</p>
                 )}
               </div>
               <div className="flex flex-col gap-1.5">
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="you@example.com" {...register("email")} />
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="you@example.com"
+                  className="focus-visible:border-brand focus-visible:ring-brand/30"
+                  {...register("email")}
+                />
                 {errors.email && (
                   <p className="text-xs text-destructive">{errors.email.message}</p>
                 )}
@@ -104,7 +120,12 @@ export function Contact() {
 
             <div className="flex flex-col gap-1.5">
               <Label htmlFor="subject">Subject (optional)</Label>
-              <Input id="subject" placeholder="What's this about?" {...register("subject")} />
+              <Input
+                id="subject"
+                placeholder="What's this about?"
+                className="focus-visible:border-brand focus-visible:ring-brand/30"
+                {...register("subject")}
+              />
             </div>
 
             <div className="flex flex-col gap-1.5">
@@ -113,6 +134,7 @@ export function Contact() {
                 id="message"
                 rows={5}
                 placeholder="Tell me a bit about the opportunity or your question..."
+                className="focus-visible:border-brand focus-visible:ring-brand/30"
                 {...register("message")}
               />
               {errors.message && (
@@ -140,9 +162,10 @@ export function Contact() {
             </Button>
 
             {submitted && (
-              <p className="text-center text-xs text-muted-foreground">
+              <div className="flex items-center justify-center gap-2 rounded-xl border border-brand/30 bg-brand/10 px-4 py-3 text-sm font-medium text-brand">
+                <CheckCircle2 className="size-4" />
                 Message sent successfully.
-              </p>
+              </div>
             )}
           </form>
         </div>

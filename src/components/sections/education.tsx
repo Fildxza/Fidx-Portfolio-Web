@@ -15,7 +15,7 @@ export async function Education() {
           {education.map((edu) => (
             <div
               key={edu.id}
-              className="rounded-2xl border border-border/60 bg-card/50 p-6 transition-colors hover:border-brand/40"
+              className="rounded-2xl border border-border/60 bg-card/50 p-6 transition-all hover:-translate-y-1 hover:border-brand/40 hover:shadow-lg hover:shadow-black/5"
             >
               <div className="mb-4 flex size-10 items-center justify-center rounded-xl bg-brand/10 text-brand">
                 <GraduationCap className="size-5" />
