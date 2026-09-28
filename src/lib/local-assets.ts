@@ -1,12 +1,12 @@
 import fs from "node:fs";
 import path from "node:path";
 
-const LOCAL_PHOTO_PATH = "/images/profile.jpg";
+const LOCAL_PHOTO_PATH = "/images/profile-v2.jpg";
 const LOCAL_RESUME_PATH = "/resume/resume.pdf";
 
 /** Server-only check: is a local profile photo present in /public/images? */
 export function getLocalProfilePhoto(): string | null {
-  const absolute = path.join(process.cwd(), "public", "images", "profile.jpg");
+  const absolute = path.join(process.cwd(), "public", "images", "profile-v2.jpg");
   return fs.existsSync(absolute) ? LOCAL_PHOTO_PATH : null;
 }
 
