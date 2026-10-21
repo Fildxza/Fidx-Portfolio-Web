@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, Info, Lock } from "lucide-react";
@@ -7,6 +8,7 @@ import { ArchitectureFlow } from "@/components/sections/architecture-flow";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import {
+  GALLERY_IMAGE_SIZE,
   getCaseStudy,
   publishedCaseStudies,
   resolveRepoUrl,
@@ -159,6 +161,38 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
         <Section title="Overview">
           <p className="text-sm leading-relaxed text-muted-foreground">{study.overview}</p>
         </Section>
+
+        {study.gallery && study.gallery.length > 0 && (
+          <Section title="Screenshots">
+            <ul className="grid gap-5 sm:grid-cols-2">
+              {study.gallery.map((shot, i) => (
+                <li key={shot.src} className={i === 0 ? "sm:col-span-2" : undefined}>
+                  <figure className="flex flex-col gap-2">
+                    <a
+                      href={shot.src}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Open full-size screenshot: ${shot.caption}`}
+                      className="block overflow-hidden rounded-xl border border-border/60 bg-card/50 transition-colors hover:border-brand/40 focus-visible:ring-2 focus-visible:ring-ring"
+                    >
+                      <Image
+                        src={shot.src}
+                        alt={shot.alt}
+                        {...GALLERY_IMAGE_SIZE}
+                        sizes={i === 0 ? "(min-width: 768px) 768px, 100vw" : "(min-width: 768px) 372px, 100vw"}
+                        className="h-auto w-full"
+                      />
+                    </a>
+                    <figcaption className="text-xs leading-relaxed text-muted-foreground">{shot.caption}</figcaption>
+                  </figure>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-3 text-xs text-muted-foreground">
+              Captured from the running app, using sample data created through the app itself. Select an image to open it full size.
+            </p>
+          </Section>
+        )}
 
         <Section title="The problem">
           <p className="text-sm leading-relaxed text-muted-foreground">{study.problem}</p>

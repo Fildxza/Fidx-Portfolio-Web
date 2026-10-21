@@ -25,6 +25,7 @@ export const siteConfig = {
  */
 export const FEATURED_REPO_ORDER = [
   "BocorCheck-OSINT",
+  "Ghost-Cyber-Intelligence-Workstation",
   "EMV-Smart-Card-Security-Analysis",
   "fidxDFT-DigitalForensicsTool-",
   "Neuro-Track",
@@ -36,6 +37,14 @@ export const FEATURED_REPO_ORDER = [
   "face-cam-detection",
   "Website-AJAircondServices",
   "Nuha-E-Wallet",
+] as const;
+
+/**
+ * Featured repositories that live outside the main GitHub account. Their live metadata is
+ * fetched individually, so a public repo is linked and a private or missing one is not.
+ */
+export const EXTRA_GITHUB_REPOS = [
+  { owner: "fxfanxy", name: "Ghost-Cyber-Intelligence-Workstation" },
 ] as const;
 
 export const NAV_LINKS = [

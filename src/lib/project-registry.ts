@@ -61,7 +61,14 @@ export type CaseStudy = {
   /** Optional note about the client, shown under the title (e.g. published contact details). */
   clientNote?: string;
   relatedLab?: { label: string };
+  /** Screenshot used as the card thumbnail instead of the generated architecture thumbnail. */
+  cover?: { src: string; alt: string };
+  /** Real screenshots of the running project, shown on its case-study page only. */
+  gallery?: { src: string; alt: string; caption: string }[];
 };
+
+/** Pixel size of every gallery screenshot (captured at a fixed 1440 × 1000 viewport). */
+export const GALLERY_IMAGE_SIZE = { width: 1440, height: 1000 } as const;
 
 export const CASE_STUDIES: CaseStudy[] = [
   {
@@ -676,6 +683,125 @@ export const CASE_STUDIES: CaseStudy[] = [
     future: [],
     evidence:
       "Verified from the public repository: its TODO file, README and the source for the components and pages. I have not executed the app for this page.",
+  },
+  {
+    slug: "ghost-cyber-intelligence-workstation",
+    repoName: "Ghost-Cyber-Intelligence-Workstation",
+    title: "FIDX-GHOST — Cyber Intelligence Workstation",
+    summary:
+      "A local-first workstation for a single analyst: case management, passive OSINT domain investigation, IOC enrichment, PCAP analysis, an entity graph and a hash-verified evidence vault, behind a tactical operations-room interface and a CLI.",
+    categories: ["Cybersecurity", "Digital Forensics"],
+    status: "v0.1 workstation",
+    visibility: "public",
+    repoUrl: "https://github.com/fxfanxy/Ghost-Cyber-Intelligence-Workstation",
+    repoOwner: "fxfanxy",
+    contributionType: "owner",
+    liveUrl: null,
+    featured: true,
+    published: true,
+    overview:
+      "FIDX-GHOST is a lawful, defensive OSINT and investigation workstation that runs on the analyst's own machine. A Flask API and SQLite database back a React interface and a ghost command-line tool, and every status light, metric and map pin is derived from real state rather than simulated.",
+    problem:
+      "Investigation work is usually spread across separate tools for notes, lookups, packet captures and evidence handling, and the results rarely record where a finding came from. This project keeps cases, indicators, evidence and findings in one place, with the source, retrieval time and confidence stored next to every result.",
+    audience: ["A single security analyst or student running authorised, passive-by-default investigations on their own machine"],
+    contribution:
+      "Repository owner. The repository contains the Flask backend and service layer, the SQLite schema and migrations, the ghost CLI, the React and TypeScript interface, backend and frontend test suites, a browser end-to-end journey script and a CI workflow.",
+    architecture: {
+      caption: "Layers and responsibilities, taken from the repository README and source layout.",
+      nodes: [
+        { label: "React interface", detail: "React 19, TypeScript, Vite and Tailwind, with a Leaflet map and a Cytoscape entity graph." },
+        { label: "Flask API", detail: "Thin routes that validate input and return JSON; all business logic lives in the service layer." },
+        { label: "Service layer", detail: "Cases, operations, OSINT, threat intel, PCAP, evidence, reports, findings and the optional AI analyst." },
+        { label: "Network guard", detail: "Every outbound request is checked for SSRF, DNS rebinding and unsafe redirects before it is sent." },
+        { label: "SQLite store", detail: "Versioned migrations; cases, findings, audit trail and the evidence-vault records." },
+        { label: "ghost CLI", detail: "A click-based command line that calls the same services as the API." },
+      ],
+    },
+    decisions: [
+      "Keep the workstation local-first: the API binds to 127.0.0.1, secrets come only from environment variables, and API keys never reach the browser.",
+      "Be passive by default. Active TLS and HTTP checks require a case with declared scope, an authorisation acknowledgement and a stated authoriser, all recorded in the audit trail.",
+      "Show only real state: when a provider, tool or network is unavailable the interface says so and offers setup steps instead of filling in a value.",
+      "Keep the service layer independent of the web framework, so the thin API module can be swapped without touching the logic.",
+      "Label any AI output as model-generated and unverified, and never write it into findings.",
+    ],
+    stack: ["Python", "Flask", "SQLite", "React 19", "TypeScript", "Vite", "Tailwind CSS", "Leaflet", "Cytoscape.js", "click"],
+    features: [
+      { name: "Case management with authorisation declaration, findings review workflow and per-case timeline", status: "implemented" },
+      { name: "Passive OSINT: DNS, RDAP and certificate-transparency lookups with source, time and confidence on every finding", status: "implemented", detail: "The README reports DNS and RDAP exercised live; crt.sh returned an error during testing and is shown as a failed step." },
+      { name: "Evidence vault with SHA-256 verification that recomputes the hash from stored bytes", status: "implemented" },
+      { name: "Optional AES-256-GCM encryption at rest for evidence", status: "implemented", detail: "Enabled only when a vault passphrase is set." },
+      { name: "Entity graph where edges come only from real operations or analyst actions", status: "implemented" },
+      { name: "PCAP and pcapng analysis with a built-in parser", status: "implemented", detail: "Protocol labels come from well-known ports, with no TCP reassembly or TLS/HTTP dissection." },
+      { name: "Self-contained HTML reports with HTML escaping and a restrictive CSP", status: "implemented" },
+      { name: "Field Mode that refuses every outbound operation", status: "implemented" },
+      { name: "ghost CLI covering cases, OSINT, intel, network, evidence and reports", status: "implemented" },
+      { name: "Threat-intel enrichment via VirusTotal, AbuseIPDB and ipinfo", status: "prototype", detail: "Normalisation and scoring are tested; the providers were exercised with mocked responses, not real keys." },
+      { name: "TShark engine for PCAP analysis", status: "prototype", detail: "Not installed during testing, so this path is covered by design only." },
+      { name: "Optional AI analyst (any OpenAI-compatible endpoint, such as local Ollama)", status: "prototype", detail: "Tested with a mocked endpoint." },
+      { name: "Zeek log ingestion", status: "planned", detail: "Zeek is only detected today; the README lists ingestion as a next task." },
+    ],
+    security: [
+      "Outbound requests resolve the hostname once, accept only globally routable addresses, pin the validated IP while preserving Host and SNI, and re-validate every redirect hop.",
+      "The local API rejects unexpected Host headers (DNS rebinding) and cross-origin state-changing requests (CSRF).",
+      "Uploads are checked by magic bytes and size, stored under random names and never executed; TShark is run with an argument list and a timeout, not a shell.",
+      "Evidence is only ever served as an attachment, and secrets are kept out of responses, logs and audit records, with tests asserting it.",
+      "The README states there is no exploitation, credential theft, persistence, IP-range scanning or arbitrary command execution in the codebase.",
+    ],
+    limitations: [
+      "Single-user and local only: there is no authentication, cloud sync or automatic retention policy, and Flask's built-in server should not be exposed to a network.",
+      "The SQLite database is not encrypted; only evidence files are, and only when a passphrase is set.",
+      "A SHA-256 integrity hash is not a digital signature, trusted timestamp or chain-of-custody proof, and the interface says so.",
+      "Development began on a machine with little internet access, so the backend uses Flask, click and unittest instead of FastAPI, Typer and pytest.",
+      "The browser journey was run on Windows with Edge only, and no full accessibility audit has been done.",
+    ],
+    future: [
+      "Run the PCAP workflow against a real capture with TShark installed, and add Zeek log ingestion.",
+      "Test enrichment and the AI analyst with real provider keys and a local model.",
+      "Validate the active TLS and HTTP steps against an authorised live target.",
+    ],
+    evidence:
+      "Verified from the public README, the source tree and the project's own screenshots, which the README describes as real captures of the running app. The README reports 71 backend tests, 16 frontend tests and a 23-step browser journey; I have not run them or the app for this page. Hosted under my second GitHub account, fxfanxy.",
+    cover: {
+      src: "/images/projects/ghost/command-centre.png",
+      alt: "FIDX-GHOST Command Overview screen showing case metrics, a geospatial map, quick actions and system health",
+    },
+    gallery: [
+      {
+        src: "/images/projects/ghost/command-centre.png",
+        alt: "Command Overview screen with open cases, findings awaiting review, a geospatial map, quick actions and system health",
+        caption: "Command Centre: metrics, map, quick actions and system health, all read from the backend.",
+      },
+      {
+        src: "/images/projects/ghost/osint-results.png",
+        alt: "Domain investigation results listing DNS and RDAP as OK, certificate transparency as failed, TLS and HTTP as skipped",
+        caption: "OSINT: each step reports OK, failed or skipped, and every finding carries its source and retrieval time.",
+      },
+      {
+        src: "/images/projects/ghost/threat-intel.png",
+        alt: "Indicator workspace with an invalid IP error, a list of indicators and enrichment providers marked not configured",
+        caption: "Threat intelligence: input validation, and providers shown as not configured rather than assumed.",
+      },
+      {
+        src: "/images/projects/ghost/pcap-analysis.png",
+        alt: "Packet capture analysis with file hash, protocol breakdown, conversations and a warning that TShark is not installed",
+        caption: "Network analysis: a PCAP parsed by the built-in engine, with a plain warning that TShark is not installed.",
+      },
+      {
+        src: "/images/projects/ghost/evidence-vault.png",
+        alt: "Evidence vault showing a registered file with a verified SHA-256 integrity hash",
+        caption: "Evidence vault: verification recomputes the hash from stored bytes, with a note on what a hash does not prove.",
+      },
+      {
+        src: "/images/projects/ghost/entity-graph.png",
+        alt: "Relationship graph of domains, IP addresses, URLs, a hash, a case and evidence",
+        caption: "Entity graph: nodes and edges created only by real operations, filterable by type and case.",
+      },
+      {
+        src: "/images/projects/ghost/operations.png",
+        alt: "Operations register with a completed domain investigation and its findings",
+        caption: "Operations: every investigation is a tracked job with a lifecycle and the findings it produced.",
+      },
+    ],
   },
 ];
 

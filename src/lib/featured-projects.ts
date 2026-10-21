@@ -43,7 +43,7 @@ export function buildFeaturedProjects(
           : [liveRepo?.language, ...(liveRepo?.topics ?? [])].filter((v): v is string => Boolean(v))),
       repoUrl: isPrivate ? null : (liveRepo?.html_url ?? manual?.repo_url ?? null),
       liveUrl: study?.liveUrl ?? manual?.live_url ?? liveRepo?.homepage ?? null,
-      imageUrl: manual?.image_url ?? null,
+      imageUrl: study?.cover?.src ?? manual?.image_url ?? null,
       stars: liveRepo ? liveRepo.stargazers_count : null,
       lastUpdated: liveRepo?.pushed_at ?? null,
       isPrivate,
