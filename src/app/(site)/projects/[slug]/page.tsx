@@ -9,8 +9,10 @@ import { cn } from "@/lib/utils";
 import {
   getCaseStudy,
   publishedCaseStudies,
+  resolveRepoUrl,
   type FeatureStatus,
 } from "@/lib/project-registry";
+import { getGithubRepos } from "@/lib/github";
 import { siteConfig } from "@/lib/constants";
 
 type Params = { slug: string };
@@ -63,8 +65,11 @@ function BulletList({ items }: { items: string[] }) {
 
 export default async function CaseStudyPage({ params }: { params: Promise<Params> }) {
   const { slug } = await params;
-  const study = getCaseStudy(slug);
-  if (!study) notFound();
+  const found = getCaseStudy(slug);
+  if (!found) notFound();
+  // Public/private status comes from live GitHub data, so flipping a repo public updates this page.
+  const liveRepoUrl = resolveRepoUrl(found, await getGithubRepos());
+  const study = { ...found, repoUrl: liveRepoUrl, visibility: liveRepoUrl ? ("public" as const) : ("private" as const) };
 
   const all = publishedCaseStudies();
   const index = all.findIndex((c) => c.slug === study.slug);
@@ -99,6 +104,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
           </p>
           <h1 className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl">{study.title}</h1>
           <p className="text-lg text-muted-foreground">{study.summary}</p>
+          {study.clientNote && <p className="text-sm text-muted-foreground">{study.clientNote}</p>}
 
           <dl className="grid grid-cols-2 gap-3 rounded-2xl border border-border/60 bg-card/50 p-4 text-sm sm:grid-cols-4">
             {[
@@ -211,9 +217,14 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
           </Section>
         )}
 
-        {study.limitations.length > 0 && (
+        {(study.limitations.length > 0 || !study.repoUrl) && (
           <Section title="Known limitations">
-            <BulletList items={study.limitations} />
+            <BulletList
+              items={[
+                ...(study.repoUrl ? [] : ["The source repository is private, so the code cannot be reviewed publicly."]),
+                ...study.limitations,
+              ]}
+            />
           </Section>
         )}
 

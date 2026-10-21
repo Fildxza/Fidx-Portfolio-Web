@@ -34,6 +34,8 @@ export const FEATURED_REPO_ORDER = [
   "fildza_data-centre",
   "drone-bait-deployer",
   "face-cam-detection",
+  "Website-AJAircondServices",
+  "Nuha-E-Wallet",
 ] as const;
 
 export const NAV_LINKS = [

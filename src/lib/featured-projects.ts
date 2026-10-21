@@ -27,8 +27,9 @@ export function buildFeaturedProjects(
     if (!liveRepo && !manual && !study) continue;
 
     // A repo that is not visible through the public API is treated as private,
-    // and its URL is never linked (it would 404 for visitors).
-    const isPrivate = !liveRepo || study?.visibility === "private";
+    // and its URL is never linked (it would 404 for visitors). Making a repo public
+    // on GitHub is therefore enough: no registry edit is needed.
+    const isPrivate = !liveRepo;
 
     projects.push({
       key: name,

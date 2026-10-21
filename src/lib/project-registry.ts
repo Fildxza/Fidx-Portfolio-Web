@@ -58,6 +58,8 @@ export type CaseStudy = {
   future: string[];
   /** How the content above was verified — shown to readers. */
   evidence: string;
+  /** Optional note about the client, shown under the title (e.g. published contact details). */
+  clientNote?: string;
   relatedLab?: { label: string };
 };
 
@@ -111,7 +113,6 @@ export const CASE_STUDIES: CaseStudy[] = [
       "Mitigation guidance is generated locally to avoid sending user data to third-party AI services.",
     ],
     limitations: [
-      "The source repository is private, so the code cannot currently be reviewed publicly.",
       "The Risk Scoring lab on this site is a separate, simulated demonstration with arbitrary weights — it is not the BocorCheck algorithm.",
     ],
     future: [],
@@ -562,6 +563,120 @@ export const CASE_STUDIES: CaseStudy[] = [
     evidence:
       "Verified from the public README and the face-detection camera component in the source tree. I have not executed the app for this page.",
   },
+  {
+    slug: "aj-airconditioning-services-website",
+    repoName: "Website-AJAircondServices",
+    title: "AJ Airconditioning Services Website",
+    summary:
+      "A bilingual (Bahasa Melayu and English), mobile-first website for a Malaysian air-conditioning business, built around a booking request, WhatsApp contact and a service-area map.",
+    categories: ["Web Applications"],
+    status: "Built, not yet deployed",
+    visibility: "public",
+    repoUrl: "https://github.com/Fildxza/Website-AJAircondServices",
+    repoOwner: "Fildxza",
+    contributionType: "owner",
+    liveUrl: null,
+    featured: false,
+    published: true,
+    clientNote:
+      "Built for AJ Airconditioning Services, a Malaysian air-conditioning business. Business contacts, published with the owner's permission: Amirul 018-283 3900 · Admin 018-262 1417.",
+    overview:
+      "A server-rendered, single-page marketing site for AJ Airconditioning Services covering chemical cleaning, gas top-up and repair, unit-based pricing, a gallery, FAQs, customer reviews, a service-area map and a booking request.",
+    problem:
+      "Customers in Malaysia mostly browse on phones and prefer WhatsApp. The business needed a fast, clear site that turns a visit into a booking request without forcing a long form or inventing claims.",
+    audience: ["Residential customers in Kuala Lumpur and Selangor", "The business owner, who edits content from one central file"],
+    contribution:
+      "Repository owner. The repository contains the site, bilingual copy, tests and project documentation (deployment notes, lead-tracking and UTM guides, a Google Business Profile guide and a growth roadmap).",
+    architecture: {
+      caption: "How the site is organised, from the repository's documentation and source layout.",
+      nodes: [
+        { label: "Central content", detail: "One file holds business name, contacts, services, prices and map pins, so edits apply site-wide." },
+        { label: "Bilingual copy", detail: "Separate Bahasa Melayu and English copy files; a test fails if they drift apart." },
+        { label: "Server-rendered page", detail: "TanStack Start renders Bahasa Melayu by default; a header switch changes language in place." },
+        { label: "Booking request", detail: "A form that prefills a WhatsApp message in the visitor's language." },
+        { label: "Service-area map", detail: "Static OpenStreetMap tiles with one pin per covered area; no API key or tracking cookies." },
+      ],
+    },
+    decisions: [
+      "Default to Bahasa Melayu with an in-place BM/EN switch (stored in localStorage) so the server and browser markup match.",
+      "Keep all business content in one file so the owner's updates do not touch component code.",
+      "Use OpenStreetMap tiles for the service-area map to avoid keys and third-party cookies.",
+      "Do not invent testimonials, certifications or guarantees; reviews are a dated snapshot of real Google reviews.",
+    ],
+    stack: ["TanStack Start", "React 19", "TypeScript", "Tailwind CSS v4", "Vite", "Vitest"],
+    features: [
+      { name: "Bilingual BM / EN site with persisted language choice", status: "implemented" },
+      { name: "Booking request that prefills a WhatsApp message", status: "implemented" },
+      { name: "Floating WhatsApp assistant", status: "implemented" },
+      { name: "Service-area map from OpenStreetMap tiles", status: "implemented" },
+      { name: "Reviews section (dated snapshot of Google reviews)", status: "implemented" },
+      { name: "SEO: structured data, sitemap and robots", status: "implemented" },
+      { name: "Unit tests for routing, booking, WhatsApp, gallery, language and map", status: "implemented" },
+      { name: "Lead tracking and growth roadmap", status: "planned", detail: "Documented as specifications and guides in the repository." },
+    ],
+    security: ["No environment variables or secrets are required, per the project's deployment notes."],
+    limitations: [
+      "Not deployed yet: the project's own notes (20 Oct 2026) say no domain exists and the first Netlify deploy is still to do.",
+      "The Bahasa Melayu copy is waiting for proof-reading by the owner.",
+    ],
+    future: ["First deployment, then verifying the live URL against the project's checklist."],
+    evidence:
+      "Verified from the public README, the project's deployment and feature documentation, its content files and test files. I have not executed the site for this page.",
+  },
+  {
+    slug: "nuha-money-management",
+    repoName: "Nuha-E-Wallet",
+    title: "Nuha Money Management",
+    summary:
+      "A mobile-first interface prototype for a child-friendly digital wallet: balances, send/request/add money flows, savings goals, a QR payment screen and browser-based location sharing.",
+    categories: ["Web Applications"],
+    status: "UI prototype",
+    visibility: "public",
+    repoUrl: "https://github.com/Fildxza/Nuha-E-Wallet",
+    repoOwner: "Fildxza",
+    contributionType: "owner",
+    liveUrl: null,
+    featured: false,
+    published: true,
+    overview:
+      "Nuha's Pocket Pal is a React and TypeScript front end for a kids' wallet concept, with login and registration, a balance card, quick actions, a savings goal, a transaction list, a QR payment dialog and a parent GPS-sharing component.",
+    problem:
+      "Children need a simple, safe-feeling way to understand money, and parents want visibility. This prototype explores the interface for that idea.",
+    audience: ["Children learning to manage pocket money, and their parents (concept)"],
+    contribution:
+      "Repository owner. The source separates authentication context, pages and the wallet components (balance, quick actions, savings goal, transactions, QR pay and GPS tracker).",
+    architecture: {
+      caption: "Interface structure, from the app's pages, context and components.",
+      nodes: [
+        { label: "Auth context", detail: "React context holding login state for the Login and Register pages." },
+        { label: "Home dashboard", detail: "Balance card, savings goal and transaction list." },
+        { label: "Quick actions", detail: "Send, request and add-money dialogs with basic form validation." },
+        { label: "QR Pay", detail: "Dialog for showing or scanning a payment code." },
+        { label: "GPS tracker", detail: "Reads the browser's location on a button press for a parent-sharing concept." },
+      ],
+    },
+    decisions: ["Build the wallet from small, separate components so each money action can be refined on its own."],
+    stack: ["React", "TypeScript", "Vite", "Tailwind CSS", "shadcn/ui", "React Router", "React Hook Form", "Zod"],
+    features: [
+      { name: "Login and registration with auth context", status: "prototype" },
+      { name: "Send, request and add-money dialogs with form validation", status: "prototype" },
+      { name: "Balance card, savings goal and transaction list", status: "prototype" },
+      { name: "QR payment dialog", status: "prototype", detail: "Interface only; no payment is processed." },
+      {
+        name: "Location sharing",
+        status: "experimental",
+        detail: "Reads the browser location when pressed and logs it; it is not transmitted anywhere.",
+      },
+      { name: "Profile, settings, notifications, transaction search and dark mode", status: "planned", detail: "Listed as open items in the project's TODO." },
+    ],
+    security: [
+      "No real payments or personal data are handled. Location is only read in the browser when the user presses the button and is not sent to a server.",
+    ],
+    limitations: ["A front-end prototype with no backend, so balances, payments and parent notifications are simulated."],
+    future: [],
+    evidence:
+      "Verified from the public repository: its TODO file, README and the source for the components and pages. I have not executed the app for this page.",
+  },
 ];
 
 export const publishedCaseStudies = () => CASE_STUDIES.filter((c) => c.published);
@@ -570,3 +685,16 @@ export const getCaseStudy = (slug: string) => publishedCaseStudies().find((c) =>
 
 export const getCaseStudyByRepo = (repoName: string) =>
   publishedCaseStudies().find((c) => c.repoName.toLowerCase() === repoName.toLowerCase());
+
+/**
+ * Where a project's code lives, decided from live GitHub data rather than a hand-kept flag:
+ * a repository that is public on GitHub is linked, one that is not is treated as private. If the
+ * GitHub API could not be reached at all (empty list), fall back to the registry's own record.
+ */
+export function resolveRepoUrl(
+  study: CaseStudy,
+  liveRepos: { name: string; html_url: string }[]
+): string | null {
+  if (liveRepos.length === 0) return study.visibility === "public" ? study.repoUrl : null;
+  return liveRepos.find((r) => r.name.toLowerCase() === study.repoName.toLowerCase())?.html_url ?? null;
+}

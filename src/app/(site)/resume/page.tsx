@@ -9,7 +9,8 @@ import {
 } from "@/lib/queries";
 import { getLocalResumeUrl } from "@/lib/local-assets";
 import { formatCertDate, formatDateRange, formatYearRange } from "@/lib/format";
-import { publishedCaseStudies } from "@/lib/project-registry";
+import { publishedCaseStudies, resolveRepoUrl } from "@/lib/project-registry";
+import { getGithubRepos } from "@/lib/github";
 import { siteConfig } from "@/lib/constants";
 
 export const metadata: Metadata = {
@@ -37,7 +38,10 @@ export default async function ResumePage() {
     getResumeUrl(),
   ]);
   const pdfUrl = remoteResumeUrl ?? getLocalResumeUrl();
-  const projects = publishedCaseStudies().slice(0, 3);
+  const liveRepos = await getGithubRepos();
+  const projects = publishedCaseStudies()
+    .slice(0, 3)
+    .map((p) => ({ ...p, repoUrl: resolveRepoUrl(p, liveRepos) }));
   const githubLabel = siteConfig.links.github.replace("https://", "");
   const linkedinLabel = siteConfig.links.linkedin.replace("https://www.", "").replace(/\/$/, "");
 
