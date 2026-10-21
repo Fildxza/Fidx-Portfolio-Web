@@ -31,6 +31,7 @@ export const metadata: Metadata = {
     "Cybersecurity Portfolio",
     "CompTIA Security+",
   ],
+  alternates: { canonical: "/" },
   authors: [{ name: siteConfig.name }],
   creator: siteConfig.name,
   openGraph: {
