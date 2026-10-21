@@ -17,7 +17,16 @@ import type {
   SocialLink,
 } from "@/lib/types";
 
+/**
+ * Resume content (experience, education, skills, certificates) is maintained in
+ * `src/lib/resume-data.ts`, so the site, the resume page and the PDF always agree and every
+ * change is reviewed in git. Set CONTENT_SOURCE=supabase to read these sections from the
+ * Supabase tables (edited via /admin) instead. Uploads, messages and auth still use Supabase.
+ */
+const resumeContentFromCode = () => process.env.CONTENT_SOURCE !== "supabase";
+
 export async function getExperience(): Promise<Experience[]> {
+  if (resumeContentFromCode()) return EXPERIENCE;
   const supabase = await createClient();
   if (!supabase) return EXPERIENCE;
 
@@ -31,6 +40,7 @@ export async function getExperience(): Promise<Experience[]> {
 }
 
 export async function getEducation(): Promise<Education[]> {
+  if (resumeContentFromCode()) return EDUCATION;
   const supabase = await createClient();
   if (!supabase) return EDUCATION;
 
@@ -58,6 +68,7 @@ export async function getProjects(): Promise<Project[]> {
 }
 
 export async function getSkillCategories(): Promise<SkillCategory[]> {
+  if (resumeContentFromCode()) return SKILL_CATEGORIES;
   const supabase = await createClient();
   if (!supabase) return SKILL_CATEGORIES;
 
@@ -77,6 +88,7 @@ export async function getSkillCategories(): Promise<SkillCategory[]> {
 }
 
 export async function getCertificates(): Promise<Certificate[]> {
+  if (resumeContentFromCode()) return CERTIFICATES;
   const supabase = await createClient();
   if (!supabase) return CERTIFICATES;
 

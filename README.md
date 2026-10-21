@@ -56,11 +56,13 @@ first and falls back gracefully (fallback content on the public site, a
 
 ## Maintaining the portfolio (V2)
 
-**Where content comes from.** Without Supabase configured (the current Vercel
-setup), the live site reads everything from `src/lib/resume-data.ts`. Edit that
-file, commit, and Vercel redeploys. If Supabase is connected, its tables win
-and `/admin` edits them instead — keep both in sync (`supabase/seed.sql` mirrors
-the fallback data).
+**Where content comes from.** Experience, education, skills and certificates are
+read from `src/lib/resume-data.ts` (the single source of truth, also matching the
+PDF). Edit that file, commit, and Vercel redeploys. The production Supabase
+tables for those sections are ignored unless the environment variable
+`CONTENT_SOURCE=supabase` is set, in which case `/admin` edits them instead (keep
+`supabase/seed.sql` in sync). Supabase is still used for contact messages,
+uploads (photo, resume file), social links and authentication.
 
 **Project case studies** live in `src/lib/project-registry.ts`, one typed entry
 per project. Each entry carries a `published` flag, a `visibility`
