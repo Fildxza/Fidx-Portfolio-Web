@@ -16,6 +16,7 @@ export const PROJECT_CATEGORIES = [
   "Cybersecurity",
   "Digital Forensics",
   "AI & Computer Vision",
+  "IoT & Embedded",
   "Web Applications",
   "Research & Academic",
 ] as const;
@@ -364,6 +365,202 @@ export const CASE_STUDIES: CaseStudy[] = [
     future: [],
     evidence:
       "Verified from the repository description and the component files present in the source tree. I have not executed the app for this page.",
+  },
+  {
+    slug: "pcap-defender-analyzer",
+    repoName: "pcap-defender-analyzer",
+    title: "PCAP Defender Analyzer",
+    summary:
+      "A web dashboard prototype for network forensics: upload packet captures, inspect packets, and review threat alerts, traffic charts and custom detection rules.",
+    categories: ["Cybersecurity", "Digital Forensics"],
+    status: "Prototype",
+    visibility: "public",
+    repoUrl: "https://github.com/Fildxza/pcap-defender-analyzer",
+    repoOwner: "Fildxza",
+    contributionType: "owner",
+    liveUrl: null,
+    featured: false,
+    published: true,
+    overview:
+      "FILDZA PCAP Analysis Tool is a React and TypeScript interface for network forensics. Its pages cover file upload, packet inspection, live monitoring, geolocation, network topology, custom rules, history and reports.",
+    problem:
+      "Packet captures are dense and hard to read. A dashboard that groups packets, alerts and traffic trends makes the first pass of a network investigation faster to reason about.",
+    audience: ["Students and analysts learning network forensics and threat detection"],
+    contribution:
+      "Repository owner. The app is organised into dedicated pages and reusable components for upload, packet analysis, threat alerts and traffic charts.",
+    architecture: {
+      caption: "Application areas, taken from the page and component structure of the app.",
+      nodes: [
+        { label: "File uploader", detail: "Component for loading a packet capture into the interface." },
+        { label: "Packet analysis", detail: "Views for inspecting individual packets." },
+        { label: "Threat alerts", detail: "Alert list; the README names SQL injection, brute force and DoS patterns as targets." },
+        { label: "Traffic charts", detail: "Charts of network traffic over time." },
+        { label: "Rules & reports", detail: "Pages for custom detection rules, history and reports." },
+      ],
+    },
+    decisions: [
+      "Split the interface into focused pages (inspector, live monitor, topology, rules, reports) so each analysis task has its own view.",
+    ],
+    stack: ["React", "TypeScript", "Vite", "Tailwind CSS", "shadcn/ui", "Recharts"],
+    features: [
+      { name: "Packet capture upload and packet inspector pages", status: "prototype" },
+      {
+        name: "Threat alerts for SQL injection, brute force and DoS patterns",
+        status: "prototype",
+        detail: "Listed in the README; the detection logic has not been reviewed for this page.",
+      },
+      { name: "Traffic charts, topology and geolocation views", status: "prototype" },
+      { name: "Custom rules, history and reports pages", status: "prototype" },
+    ],
+    security: [],
+    limitations: [
+      "Whether analysis runs on real capture data or sample data has not been verified for this page, so treat it as an interface prototype.",
+    ],
+    future: [],
+    evidence:
+      "Verified from the public README and the page and component files in the source tree. I have not executed the app for this page.",
+    relatedLab: { label: "Explore detection ideas in the Log Explorer lab" },
+  },
+  {
+    slug: "fildza-data-centre",
+    repoName: "fildza_data-centre",
+    title: "Fildza Data Centre — Cyber Defense Dashboard",
+    summary:
+      "A dashboard prototype that brings data-centre monitoring and a security-operations view together: server and GPU status, alert logging and a threat map.",
+    categories: ["Cybersecurity", "Web Applications"],
+    status: "Prototype",
+    visibility: "public",
+    repoUrl: "https://github.com/Fildxza/fildza_data-centre",
+    repoOwner: "Fildxza",
+    contributionType: "owner",
+    liveUrl: null,
+    featured: false,
+    published: true,
+    overview:
+      "A React and TypeScript web app with two main views: a Data Centre page for infrastructure status and a Cyber Defense page for threat detection, an alert log and a threat map.",
+    problem:
+      "Infrastructure health and security alerts are usually watched in separate tools. This prototype explores presenting both in one responsive interface.",
+    audience: ["Learners exploring infrastructure monitoring and SOC-style dashboards"],
+    contribution:
+      "Repository owner. The source separates the two main pages from reusable status-card, alert-log and threat-map components.",
+    architecture: {
+      caption: "Interface structure, from the pages and components of the app.",
+      nodes: [
+        { label: "Navigation", detail: "Switches between the Data Centre and Cyber Defense views." },
+        { label: "Data Centre page", detail: "Infrastructure status; the README mentions server performance, GPU utilisation and network traffic." },
+        { label: "Cyber Defense page", detail: "Security-operations view for threats and alerts." },
+        { label: "Alert log", detail: "Component listing security alerts." },
+        { label: "Threat map", detail: "Component visualising threat locations." },
+      ],
+    },
+    decisions: ["Reusable status-card, alert-log and threat-map components shared across the two views."],
+    stack: ["React", "TypeScript", "Vite", "Tailwind CSS", "shadcn/ui", "Recharts"],
+    features: [
+      { name: "Data Centre monitoring view", status: "prototype" },
+      { name: "Cyber Defense view with alert log", status: "prototype" },
+      { name: "Threat map", status: "prototype" },
+      {
+        name: "GPU node management",
+        status: "conceptual",
+        detail: "Described in the README; not located in the source for this page.",
+      },
+    ],
+    security: [],
+    limitations: ["Whether the dashboards show live or sample data has not been verified, so treat the figures as illustrative."],
+    future: [],
+    evidence:
+      "Verified from the public README and the page and component files in the source tree. I have not executed the app for this page.",
+  },
+  {
+    slug: "drone-bait-deployer",
+    repoName: "drone-bait-deployer",
+    title: "Smart BaitDrop Drone System",
+    summary:
+      "A prototype that links a React telemetry dashboard to a drone controller through a Flask backend, for monitoring flight data and triggering a payload drop.",
+    categories: ["IoT & Embedded", "Web Applications"],
+    status: "Prototype",
+    visibility: "public",
+    repoUrl: "https://github.com/Fildxza/drone-bait-deployer",
+    repoOwner: "Fildxza",
+    contributionType: "owner",
+    liveUrl: null,
+    featured: false,
+    published: true,
+    overview:
+      "An autonomous payload and telemetry system integrating React, Flask and Arduino. The README describes it as originally inspired by a smart fishing bait-drop concept and now evolving into a humanitarian-delivery prototype.",
+    problem:
+      "Operating a drone payload mechanism needs one place to watch telemetry and trigger a drop, tying a web interface to embedded hardware.",
+    audience: ["Hobbyist and educational drone experimentation, per the README"],
+    contribution:
+      "Repository owner. The repository contains a Python backend (a Flask app and a WebSocket server) alongside the web dashboard, and the README documents the Arduino link.",
+    architecture: {
+      caption: "System layers as described in the README and backend files.",
+      nodes: [
+        { label: "React dashboard", detail: "Web interface for telemetry and controls." },
+        { label: "Flask API", detail: "Backend application serving the dashboard." },
+        { label: "WebSocket server", detail: "Real-time channel for live telemetry." },
+        { label: "Serial link", detail: "The README describes API and serial communication between the backend and the Arduino." },
+        { label: "Arduino controller", detail: "Drone controller board that performs the payload drop." },
+      ],
+    },
+    decisions: ["Separate the web dashboard, the Python backend and the embedded controller so each layer can change independently."],
+    stack: ["React", "TypeScript", "Python", "Flask", "WebSocket", "Arduino"],
+    features: [
+      {
+        name: "Live telemetry monitoring (battery, altitude, GPS, speed)",
+        status: "prototype",
+        detail: "Described in the README; not tested against hardware for this page.",
+      },
+      { name: "Manual and automated payload drop", status: "prototype" },
+      { name: "API and serial communication with an Arduino controller", status: "prototype" },
+    ],
+    security: [],
+    limitations: ["Hardware behaviour has not been verified for this page; the README labels the project educational."],
+    future: [],
+    evidence:
+      "Verified from the public README and the presence of the backend files. I have not executed the software or tested it with hardware.",
+  },
+  {
+    slug: "smart-focus-camera",
+    repoName: "face-cam-detection",
+    title: "Smart Focus Camera",
+    summary: "A browser-based real-time face detection and tracking camera, with an overlay and live FPS monitoring.",
+    categories: ["AI & Computer Vision", "Web Applications"],
+    status: "Prototype",
+    visibility: "public",
+    repoUrl: "https://github.com/Fildxza/face-cam-detection",
+    repoOwner: "Fildxza",
+    contributionType: "owner",
+    liveUrl: null,
+    featured: false,
+    published: true,
+    overview:
+      "A React and TypeScript app that uses MediaPipe Tasks Vision to detect and track faces from the live camera feed, drawing an overlay and showing performance metrics.",
+    problem:
+      "A small, focused exploration of running computer-vision models in the browser and presenting their output clearly in real time.",
+    audience: ["Personal learning project in browser-based computer vision"],
+    contribution: "Repository owner. The detection logic is encapsulated in a single face-detection camera component.",
+    architecture: {
+      caption: "Processing flow, from the README and component structure.",
+      nodes: [
+        { label: "Camera feed", detail: "Live video from the browser camera, with permission." },
+        { label: "MediaPipe detector", detail: "MediaPipe Tasks Vision detects faces in each frame." },
+        { label: "Overlay", detail: "Tracking results drawn over the video." },
+        { label: "FPS monitor", detail: "Shows performance metrics for the live stream." },
+      ],
+    },
+    decisions: ["Keep detection, drawing and metrics inside one reusable camera component."],
+    stack: ["React", "TypeScript", "Vite", "MediaPipe", "Tailwind CSS", "shadcn/ui"],
+    features: [
+      { name: "Real-time face detection with MediaPipe", status: "prototype" },
+      { name: "Live camera overlay tracking", status: "prototype" },
+      { name: "FPS and performance metrics", status: "prototype" },
+    ],
+    security: [],
+    limitations: ["Requires a modern browser with camera access; behaviour has not been tested across devices for this page."],
+    future: [],
+    evidence:
+      "Verified from the public README and the face-detection camera component in the source tree. I have not executed the app for this page.",
   },
 ];
 

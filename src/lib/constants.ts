@@ -30,6 +30,10 @@ export const FEATURED_REPO_ORDER = [
   "Neuro-Track",
   "justice-for-wildlife-malaysia",
   "Ops-Mission-Control",
+  "pcap-defender-analyzer",
+  "fildza_data-centre",
+  "drone-bait-deployer",
+  "face-cam-detection",
 ] as const;
 
 export const NAV_LINKS = [

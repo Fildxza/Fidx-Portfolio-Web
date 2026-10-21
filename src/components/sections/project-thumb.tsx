@@ -4,6 +4,7 @@ const HUES: Record<string, number> = {
   Cybersecurity: 160,
   "Digital Forensics": 205,
   "AI & Computer Vision": 305,
+  "IoT & Embedded": 45,
   "Web Applications": 255,
   "Research & Academic": 80,
 };
