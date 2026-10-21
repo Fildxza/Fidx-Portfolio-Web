@@ -54,6 +54,45 @@ first and falls back gracefully (fallback content on the public site, a
 | `GITHUB_TOKEN` | pinned repos + higher rate limits | github.com/settings/tokens (no scopes needed for public data) |
 | `NEXT_PUBLIC_SITE_URL` | correct SEO/OpenGraph URLs | your production domain |
 
+## Maintaining the portfolio (V2)
+
+**Where content comes from.** Without Supabase configured (the current Vercel
+setup), the live site reads everything from `src/lib/resume-data.ts`. Edit that
+file, commit, and Vercel redeploys. If Supabase is connected, its tables win
+and `/admin` edits them instead — keep both in sync (`supabase/seed.sql` mirrors
+the fallback data).
+
+**Project case studies** live in `src/lib/project-registry.ts`, one typed entry
+per project. Each entry carries a `published` flag, a `visibility`
+(`private` repos must have `repoUrl: null`) and an `evidence` note saying how its
+claims were verified. Live GitHub data (stars, last push) is merged in at request
+time by `src/lib/featured-projects.ts`, so the registry holds narrative only —
+never statistics. To add a project: append an entry, add its repo name to
+`FEATURED_REPO_ORDER` in `src/lib/constants.ts`, then check it is accurate.
+Only describe what the README, source or resume actually supports.
+
+**Skills** are rendered by `src/components/sections/skills-explorer.tsx`. Skill
+names come from the data source; the evidence chips and notes come from
+`src/lib/skills-map.ts`. There are deliberately no percentage ratings.
+
+**Interactive Labs** (`src/components/labs/`) run entirely in the browser with
+fictional data. Their logic is plain TypeScript in `src/lib/` (`forensics.ts`,
+`risk-model.ts`, `log-lab.ts`, `network-lab.ts`) and is covered by tests.
+
+**Resume PDF.** `/resume` has an A4 print layout. To refresh
+`public/resume/resume.pdf`: open `/resume`, print to PDF (A4, margins 10 mm,
+headers/footers off), and save over that file. Re-check it is 2 pages and that
+the text is selectable.
+
+**Checks before deploying**
+
+```bash
+npm run type-check && npm run lint && npm test && npm run build
+```
+
+Deploy by pushing to `main`; Vercel builds it. For risky changes push a branch
+first and review the Preview URL.
+
 ## Connecting Supabase
 
 1. Create a free project at [supabase.com](https://supabase.com).

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import { toast } from "sonner";
 import {
@@ -44,6 +45,7 @@ export function CommandPalette({ defaultOpen = false }: { defaultOpen?: boolean 
   const [query, setQuery] = useState("");
   const [index, setIndex] = useState(0);
   const { resolvedTheme, setTheme } = useTheme();
+  const router = useRouter();
   const listRef = useRef<HTMLUListElement>(null);
 
   const close = useCallback(() => {
@@ -87,7 +89,7 @@ export function CommandPalette({ defaultOpen = false }: { defaultOpen?: boolean 
       { id: "lab-risk", group: "Labs", label: "Risk Scoring — BocorCheck demo", keywords: "osint breach score", icon: Gauge, run: openLab("risk") },
       { id: "lab-logs", group: "Labs", label: "Log Explorer — detections & timeline", keywords: "siem incident", icon: ScrollText, run: openLab("logs") },
       { id: "lab-network", group: "Labs", label: "Network Map — segmentation", keywords: "firewall vlan topology", icon: Network, run: openLab("network") },
-      { id: "resume-page", group: "Actions", label: "View resume", icon: FileText, run: () => (window.location.href = "/resume") },
+      { id: "resume-page", group: "Actions", label: "View resume", icon: FileText, run: () => router.push("/resume") },
       {
         id: "resume-pdf",
         group: "Actions",
@@ -128,7 +130,7 @@ export function CommandPalette({ defaultOpen = false }: { defaultOpen?: boolean 
         run: () => setTheme(resolvedTheme === "dark" ? "light" : "dark"),
       },
     ];
-  }, [resolvedTheme, setTheme]);
+  }, [resolvedTheme, setTheme, router]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
