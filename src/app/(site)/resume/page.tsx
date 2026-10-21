@@ -8,7 +8,7 @@ import {
   getSkillCategories,
 } from "@/lib/queries";
 import { getLocalResumeUrl } from "@/lib/local-assets";
-import { formatDateRange, formatYearRange } from "@/lib/format";
+import { formatCertDate, formatDateRange, formatYearRange } from "@/lib/format";
 import { publishedCaseStudies } from "@/lib/project-registry";
 import { siteConfig } from "@/lib/constants";
 
@@ -20,10 +20,10 @@ export const metadata: Metadata = {
 
 /** Summary sentences are drawn only from facts already stated on the resume and About section. */
 const SUMMARY =
-  "IT student completing a Bachelor of Information Technology (Computer Forensics) at UNIRAZAK, with hands-on experience in IT helpdesk support, building-automation systems and field technical support. CompTIA Security+ certified. Built BocorCheck, an OSINT-based personal-data-exposure monitoring system, as a final year project. Seeking an IT internship to build on infrastructure, networking and security fundamentals.";
+  "IT student completing a Bachelor of Information Technology (Computer Forensics, CGPA 3.85) at UNIRAZAK, with hands-on experience in IT helpdesk support, building-automation systems and field technical support, plus a CompTIA Security+ certification. Built BocorCheck, an OSINT-based personal-data-exposure monitoring system, as a final year project. Currently undergoing industrial training to build on infrastructure, networking and security fundamentals.";
 
 const SectionTitle = ({ children }: { children: React.ReactNode }) => (
-  <h3 className="mb-3 border-b border-border/60 pb-1 text-xs font-semibold uppercase tracking-widest text-brand print:text-black">
+  <h3 className="mb-3 border-b border-border/60 pb-1 text-xs print:mb-1.5 print:pb-0.5 font-semibold uppercase tracking-widest text-brand print:text-black">
     {children}
   </h3>
 );
@@ -42,7 +42,7 @@ export default async function ResumePage() {
   const linkedinLabel = siteConfig.links.linkedin.replace("https://www.", "").replace(/\/$/, "");
 
   return (
-    <div className="container-page section-y max-w-3xl print:max-w-none print:p-0 print:py-0">
+    <div className="container-page section-y max-w-3xl print:max-w-none print:p-0! print:py-0!">
       <div className="mb-10 flex flex-col items-center gap-4 text-center print:hidden">
         <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Resume</h1>
         <p className="max-w-xl text-muted-foreground">
@@ -52,8 +52,8 @@ export default async function ResumePage() {
         <ResumeActions pdfUrl={pdfUrl} />
       </div>
 
-      <article className="rounded-3xl border border-border/60 bg-card/50 p-8 sm:p-10 print:rounded-none print:border-none print:bg-transparent print:p-0 print:text-[10.5pt] print:leading-snug">
-        <header className="mb-6 text-center">
+      <article className="rounded-3xl border border-border/60 bg-card/50 p-8 sm:p-10 print:rounded-none print:border-none print:bg-transparent print:p-0 print:text-[10pt] print:leading-tight">
+        <header className="mb-6 text-center print:mb-2">
           <h2 className="text-2xl font-semibold">{siteConfig.name}</h2>
           <p className="mt-1 text-sm text-muted-foreground print:text-black">
             {siteConfig.location} • {siteConfig.phone} •{" "}
@@ -72,14 +72,14 @@ export default async function ResumePage() {
           </p>
         </header>
 
-        <section className="mb-6">
+        <section className="mb-6 print:mb-2">
           <SectionTitle>Professional summary</SectionTitle>
           <p className="text-sm leading-relaxed text-muted-foreground print:text-black">{SUMMARY}</p>
         </section>
 
-        <section className="mb-6">
+        <section className="mb-6 print:mb-2">
           <SectionTitle>Experience</SectionTitle>
-          <div className="space-y-5">
+          <div className="space-y-5 print:space-y-1.5">
             {experience.map((job) => (
               <div key={job.id} className="break-inside-avoid">
                 <div className="flex flex-wrap items-baseline justify-between gap-1">
@@ -92,7 +92,7 @@ export default async function ResumePage() {
                   {job.company}
                   {job.location ? `, ${job.location}` : ""}
                 </p>
-                <ul className="list-disc space-y-1 pl-4 text-sm text-muted-foreground print:text-black">
+                <ul className="list-disc space-y-1 pl-4 text-sm text-muted-foreground print:space-y-0 print:text-black">
                   {job.bullets.map((bullet, i) => (
                     <li key={i}>{bullet}</li>
                   ))}
@@ -102,9 +102,9 @@ export default async function ResumePage() {
           </div>
         </section>
 
-        <section className="mb-6 break-inside-avoid">
+        <section className="mb-6 break-inside-avoid print:mb-2">
           <SectionTitle>Education</SectionTitle>
-          <div className="space-y-3">
+          <div className="space-y-3 print:space-y-1">
             {education.map((edu) => (
               <div key={edu.id} className="flex flex-wrap items-baseline justify-between gap-1">
                 <div>
@@ -113,6 +113,7 @@ export default async function ResumePage() {
                     {edu.credential}
                     {edu.field ? ` — ${edu.field}` : ""}
                   </p>
+                  {edu.score && <p className="text-sm text-muted-foreground print:text-black">{edu.score}</p>}
                 </div>
                 <span className="text-xs text-muted-foreground print:text-black">
                   {formatYearRange(edu.start_date, edu.end_date)}
@@ -123,20 +124,23 @@ export default async function ResumePage() {
         </section>
 
         {certificates.length > 0 && (
-          <section className="mb-6 break-inside-avoid">
+          <section className="mb-6 break-inside-avoid print:mb-2">
             <SectionTitle>Certifications</SectionTitle>
             <ul className="space-y-1 text-sm">
               {certificates.map((cert) => (
                 <li key={cert.id}>
                   <span className="font-medium">{cert.title}</span>
-                  <span className="text-muted-foreground print:text-black"> — {cert.issuer}</span>
+                  <span className="text-muted-foreground print:text-black">
+                    {cert.issuer ? ` — ${cert.issuer}` : ""}
+                    {cert.issue_date ? ` (${formatCertDate(cert.issue_date)})` : ""}
+                  </span>
                 </li>
               ))}
             </ul>
           </section>
         )}
 
-        <section className="mb-6 break-inside-avoid">
+        <section className="mb-6 break-inside-avoid print:mb-2">
           <SectionTitle>Technical skills</SectionTitle>
           <div className="space-y-2 text-sm">
             {skillCategories.map((category) => (
@@ -150,16 +154,23 @@ export default async function ResumePage() {
           </div>
         </section>
 
+        <section className="mb-6 break-inside-avoid print:mb-2">
+          <SectionTitle>Languages</SectionTitle>
+          <p className="text-sm text-muted-foreground print:text-black">
+            Bahasa Malaysia (Native) • English (Professional Writing, Conversational Speaking)
+          </p>
+        </section>
+
         <section className="break-inside-avoid">
           <SectionTitle>Selected projects</SectionTitle>
-          <ul className="space-y-3 text-sm">
+          <ul className="space-y-3 text-sm print:space-y-1.5">
             {projects.map((project) => (
               <li key={project.slug}>
                 <p>
                   <span className="font-medium">{project.title}</span>
                   <span className="text-muted-foreground print:text-black"> — {project.status}</span>
                 </p>
-                <p className="text-muted-foreground print:text-black">{project.summary}</p>
+                <p className="text-muted-foreground print:hidden">{project.summary}</p>
                 <p className="text-xs text-muted-foreground print:text-black">
                   {project.stack.join(", ")}
                   {project.repoUrl ? ` • ${project.repoUrl.replace("https://", "")}` : " • Private repository"}

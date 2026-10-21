@@ -85,7 +85,7 @@ function Workflow() {
   return (
     <div className="rounded-2xl border border-border/60 bg-card/50 p-5 sm:p-6">
       <div className="mb-1 flex items-baseline justify-between gap-3">
-        <h4 className="text-sm font-semibold">How a digital forensic investigation flows</h4>
+        <h3 className="text-sm font-semibold">How a digital forensic investigation flows</h3>
         <span className="text-[0.7rem] text-muted-foreground">Loosely follows NIST SP 800-86</span>
       </div>
       <p className="mb-5 text-xs text-muted-foreground">Select a stage to see what it means and where this lab touches it.</p>
@@ -188,7 +188,7 @@ function Verdict({ ok, children }: { ok: boolean; children: React.ReactNode }) {
       role="status"
       className={cn(
         "flex items-start gap-2 rounded-lg px-3 py-2 text-sm",
-        ok ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400" : "bg-destructive/10 text-destructive"
+        ok ? "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400" : "bg-destructive/10 text-destructive"
       )}
     >
       <Icon className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
@@ -549,7 +549,7 @@ export function ForensicsLab() {
 
       <div className="rounded-2xl border border-border/60 bg-card/50 p-5 sm:p-6">
         <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
-          <h4 className="text-sm font-semibold">Hash &amp; integrity workbench</h4>
+          <h3 className="text-sm font-semibold">Hash &amp; integrity workbench</h3>
           <div role="radiogroup" aria-label="Workbench mode" className="flex rounded-full border border-border p-0.5">
             {(
               [

@@ -35,9 +35,9 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 }
 
 const STATUS_STYLE: Record<FeatureStatus, { label: string; className: string }> = {
-  implemented: { label: "Implemented", className: "border-emerald-500/40 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400" },
-  prototype: { label: "Prototype", className: "border-sky-500/40 bg-sky-500/10 text-sky-600 dark:text-sky-400" },
-  experimental: { label: "Experimental", className: "border-amber-500/40 bg-amber-500/10 text-amber-600 dark:text-amber-400" },
+  implemented: { label: "Implemented", className: "border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400" },
+  prototype: { label: "Prototype", className: "border-sky-500/40 bg-sky-500/10 text-sky-700 dark:text-sky-400" },
+  experimental: { label: "Experimental", className: "border-amber-500/40 bg-amber-500/10 text-amber-700 dark:text-amber-400" },
   planned: { label: "Planned", className: "border-border bg-muted text-muted-foreground" },
   conceptual: { label: "Conceptual", className: "border-border bg-muted text-muted-foreground" },
 };

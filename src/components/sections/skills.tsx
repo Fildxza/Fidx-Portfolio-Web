@@ -11,7 +11,7 @@ export async function Skills() {
         <SectionHeading
           eyebrow="Skills"
           title="Tools & technologies I work with"
-          description="No self-scored percentages. Each skill is tied to where it was actually used — explore the map to see the connections."
+          description="No self-scored percentages. Each skill shows where it comes from — work, a project, a certification, coursework or my resume. Explore the map to see the connections."
         />
         <SkillsExplorer categories={categories} />
       </div>

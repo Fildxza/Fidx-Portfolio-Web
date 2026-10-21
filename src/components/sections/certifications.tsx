@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Award, BadgeCheck, ExternalLink, FileText } from "lucide-react";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { getCertificates } from "@/lib/queries";
-import { formatMonthYear } from "@/lib/format";
+import { formatCertDate } from "@/lib/format";
 
 export async function Certifications() {
   const certificates = await getCertificates();
@@ -38,11 +38,11 @@ export async function Certifications() {
               </div>
 
               <div className="min-w-0 flex-1">
-                <h3 className="truncate font-medium">{cert.title}</h3>
-                <p className="text-sm text-muted-foreground">{cert.issuer}</p>
+                <h3 className="font-medium leading-snug">{cert.title}</h3>
+                {cert.issuer && <p className="text-sm text-muted-foreground">{cert.issuer}</p>}
                 {cert.issue_date && (
                   <p className="text-xs text-muted-foreground">
-                    {formatMonthYear(cert.issue_date)}
+                    {formatCertDate(cert.issue_date)}
                   </p>
                 )}
               </div>

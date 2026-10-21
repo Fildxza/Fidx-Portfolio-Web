@@ -9,6 +9,11 @@ export function formatDateRange(
   return `${startLabel} — ${formatMonthYear(end)}`;
 }
 
+/** Certificates may carry just a year ("2025"); show that as-is instead of inventing a month. */
+export function formatCertDate(value: string): string {
+  return /^\d{4}$/.test(value) ? value : formatMonthYear(value);
+}
+
 export function formatMonthYear(dateString: string): string {
   const date = new Date(dateString);
   return date.toLocaleDateString("en-US", { month: "short", year: "numeric" });

@@ -4,12 +4,20 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Fingerprint, Gauge, Lock, Network, ScrollText, type LucideIcon } from "lucide-react";
 import { SectionHeading } from "@/components/shared/section-heading";
-import { ForensicsLab } from "@/components/labs/forensics-lab";
-import { RiskLab } from "@/components/labs/risk-lab";
-import { LogLab } from "@/components/labs/log-lab";
-import { NetworkLab } from "@/components/labs/network-lab";
+import dynamic from "next/dynamic";
+import { LazyMount } from "@/components/shared/lazy-mount";
 import { OPEN_LAB_EVENT, isLabId, type LabId } from "@/lib/lab-events";
 import { cn } from "@/lib/utils";
+
+const LabLoading = () => (
+  <div className="flex h-64 items-center justify-center text-sm text-muted-foreground" role="status">
+    Loading lab…
+  </div>
+);
+const ForensicsLab = dynamic(() => import("@/components/labs/forensics-lab").then((m) => m.ForensicsLab), { ssr: false, loading: LabLoading });
+const RiskLab = dynamic(() => import("@/components/labs/risk-lab").then((m) => m.RiskLab), { ssr: false, loading: LabLoading });
+const LogLab = dynamic(() => import("@/components/labs/log-lab").then((m) => m.LogLab), { ssr: false, loading: LabLoading });
+const NetworkLab = dynamic(() => import("@/components/labs/network-lab").then((m) => m.NetworkLab), { ssr: false, loading: LabLoading });
 
 const LABS: {
   id: LabId;
@@ -148,6 +156,7 @@ export function Labs() {
         <p className="mb-6 text-center text-sm text-muted-foreground">{current.blurb}</p>
 
         <div role="tabpanel" id={`lab-panel-${active}`} aria-labelledby={`lab-tab-${active}`}>
+          <LazyMount minHeight={640}>
           <AnimatePresence mode="wait" initial={false}>
             <motion.div
               key={active}
@@ -162,6 +171,7 @@ export function Labs() {
               {active === "network" && <NetworkLab />}
             </motion.div>
           </AnimatePresence>
+          </LazyMount>
         </div>
       </div>
     </section>

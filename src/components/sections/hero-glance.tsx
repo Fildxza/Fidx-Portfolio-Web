@@ -13,7 +13,7 @@ export async function HeroGlance() {
   const [experience, certificates] = await Promise.all([getExperience(), getCertificates()]);
 
   const items: Item[] = [
-    { icon: Briefcase, label: "Hands-on IT roles", href: "#experience", value: experience.length },
+    { icon: Briefcase, label: "Technical roles held", href: "#experience", value: experience.length },
     { icon: FolderGit2, label: "Project case studies", href: "#projects", value: publishedCaseStudies().length },
     { icon: FlaskConical, label: "Interactive labs", href: "#labs", value: LAB_COUNT },
     {

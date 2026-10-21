@@ -40,7 +40,7 @@ export async function Hero() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500/75" />
               <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
             </span>
-            Open to IT Internship opportunities
+            Currently undergoing industrial training
           </span>
 
           <h1 className="text-balance text-4xl font-semibold tracking-tight sm:text-6xl">

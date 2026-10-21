@@ -26,8 +26,7 @@ export async function submitContactForm(
   if (!supabase) {
     return {
       success: false,
-      error:
-        "Contact storage isn't connected yet — Supabase hasn't been configured for this deployment.",
+      error: "Direct messaging isn't available right now.",
     };
   }
 

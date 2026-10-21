@@ -8,6 +8,7 @@ import {
   Code2,
   FolderGit2,
   GraduationCap,
+  ListChecks,
   Laptop,
   Network,
   ShieldCheck,
@@ -36,6 +37,7 @@ const EVIDENCE: Record<EvidenceKind, { icon: LucideIcon; label: string }> = {
   project: { icon: FolderGit2, label: "Project" },
   cert: { icon: BadgeCheck, label: "Certification" },
   study: { icon: GraduationCap, label: "Coursework" },
+  listed: { icon: ListChecks, label: "Listed on resume" },
 };
 
 export function SkillsExplorer({ categories }: { categories: SkillCategory[] }) {
@@ -94,7 +96,7 @@ export function SkillsExplorer({ categories }: { categories: SkillCategory[] }) 
     .map((n) => n.skill.label);
 
   return (
-    <div className="grid items-start gap-6 lg:grid-cols-[1.7fr_1fr] lg:gap-8">
+    <div className="grid items-start gap-6 lg:grid-cols-[1.9fr_1fr] lg:gap-8">
       {/* Capability map */}
       <div
         ref={stageRef}

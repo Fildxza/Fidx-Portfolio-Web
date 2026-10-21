@@ -19,7 +19,7 @@ import {
 } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { NAV_LINKS, siteConfig } from "@/lib/constants";
-import { OPEN_LAB_EVENT, type LabId } from "@/lib/lab-events";
+import { COMMAND_PALETTE_EVENT, OPEN_LAB_EVENT, type LabId } from "@/lib/lab-events";
 import { cn } from "@/lib/utils";
 
 type Command = {
@@ -31,8 +31,6 @@ type Command = {
   run: () => void;
 };
 
-export const COMMAND_PALETTE_EVENT = "open-command-palette";
-
 function scrollToHash(hash: string) {
   const target = document.querySelector(hash);
   if (target) {
@@ -41,8 +39,8 @@ function scrollToHash(hash: string) {
   }
 }
 
-export function CommandPalette() {
-  const [open, setOpen] = useState(false);
+export function CommandPalette({ defaultOpen = false }: { defaultOpen?: boolean }) {
+  const [open, setOpen] = useState(defaultOpen);
   const [query, setQuery] = useState("");
   const [index, setIndex] = useState(0);
   const { resolvedTheme, setTheme } = useTheme();

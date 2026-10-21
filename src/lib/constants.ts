@@ -4,7 +4,7 @@ export const siteConfig = {
   title: "Mohamad Fildza Azman — IT & Computer Forensics",
   description:
     "Portfolio of Mohamad Fildza Azman — IT student specializing in Computer Forensics, with hands-on experience in IT support, network diagnostics, systems administration, and cybersecurity.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://fildza.dev",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://fildza-portfolio.vercel.app",
   email: "mfildxza@gmail.com",
   phone: "+60 11-3600 5936",
   location: "Penang, Malaysia",

@@ -228,7 +228,7 @@ export function RiskLab() {
                 <li key={c.id} title={c.note}>
                   <div className="mb-1 flex items-baseline justify-between gap-3 text-sm">
                     <span>{c.label}</span>
-                    <span className={cn("font-mono text-xs tabular-nums", c.points < 0 ? "text-emerald-600 dark:text-emerald-400" : "text-muted-foreground")}>
+                    <span className={cn("font-mono text-xs tabular-nums", c.points < 0 ? "text-emerald-700 dark:text-emerald-400" : "text-muted-foreground")}>
                       {c.points > 0 ? "+" : ""}
                       {c.points}
                     </span>
@@ -251,14 +251,14 @@ export function RiskLab() {
 
         {levers.length > 0 && (
           <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/5 p-3">
-            <p className="mb-1.5 flex items-center gap-1.5 text-xs font-medium uppercase tracking-wide text-emerald-600 dark:text-emerald-400">
+            <p className="mb-1.5 flex items-center gap-1.5 text-xs font-medium uppercase tracking-wide text-emerald-700 dark:text-emerald-400">
               <ArrowDownRight className="size-3.5" aria-hidden="true" />
               What-if
             </p>
             <ul className="flex flex-col gap-1 text-sm">
               {levers.map((l) => (
                 <li key={l.action}>
-                  {l.action} <span className="font-mono text-xs text-emerald-600 dark:text-emerald-400">→ −{l.delta} points</span>
+                  {l.action} <span className="font-mono text-xs text-emerald-700 dark:text-emerald-400">→ −{l.delta} points</span>
                 </li>
               ))}
             </ul>

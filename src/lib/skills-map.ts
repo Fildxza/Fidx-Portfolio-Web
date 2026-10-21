@@ -10,7 +10,7 @@ import type { SkillCategory } from "@/lib/types";
  * simply renders without evidence rather than with an invented one.
  */
 
-export type EvidenceKind = "work" | "project" | "cert" | "study";
+export type EvidenceKind = "work" | "project" | "cert" | "study" | "listed";
 
 export type EvidenceSource = {
   kind: EvidenceKind;
@@ -21,6 +21,7 @@ const WORK = (label: string): EvidenceSource => ({ kind: "work", label });
 const PROJECT = (label: string): EvidenceSource => ({ kind: "project", label });
 const CERT = (label: string): EvidenceSource => ({ kind: "cert", label });
 const STUDY = (label: string): EvidenceSource => ({ kind: "study", label });
+const LISTED = (label: string): EvidenceSource => ({ kind: "listed", label });
 
 const QORVA = WORK("Qorva Technology");
 const PAVILION = WORK("Pavilion");
@@ -45,6 +46,38 @@ const SKILL_META: Record<string, SkillMeta> = {
     short: "Zendesk Ticketing",
     note: "Logged, tracked and resolved end-user tickets in Zendesk.",
     sources: [QORVA],
+  },
+  "virtualization (vmware, virtualbox)": {
+    short: "VMware / VirtualBox",
+    note: "Virtualization platforms listed on my resume.",
+    sources: [LISTED("Resume")],
+  },
+  "windows, ubuntu & kali linux": {
+    short: "Windows / Ubuntu / Kali",
+    note: "Operating systems listed on my resume.",
+    sources: [LISTED("Resume")],
+  },
+  "wireshark & nmap": {
+    note: "Network analysis and scanning tools listed on my resume under forensics and security tools.",
+    sources: [LISTED("Resume")],
+  },
+  "autopsy, ftk imager & volatility": {
+    short: "Autopsy / FTK / Volatility",
+    note: "Disk and memory forensics tools listed on my resume.",
+    sources: [LISTED("Resume")],
+  },
+  "aleapp / ileapp": {
+    note: "Mobile-forensics parsers listed on my resume.",
+    sources: [LISTED("Resume")],
+  },
+  "sherlock, spiderfoot & maltego": {
+    short: "Sherlock / SpiderFoot / Maltego",
+    note: "OSINT tools listed on my resume.",
+    sources: [LISTED("Resume")],
+  },
+  "basic java": {
+    note: "Basic Java, supported by a Java course certificate (LearnQuest, 2025).",
+    sources: [CERT("Java · LearnQuest")],
   },
   "preventive maintenance": {
     short: "Preventive Maintenance",
@@ -183,8 +216,8 @@ export function enrichCategories(categories: SkillCategory[]): EnrichedCategory[
 /* Layout — pure geometry for the capability map                       */
 /* ------------------------------------------------------------------ */
 
-export const MAP_WIDTH = 920;
-export const MAP_HEIGHT = 540;
+export const MAP_WIDTH = 960;
+export const MAP_HEIGHT = 620;
 export const MAP_CENTER = { x: MAP_WIDTH / 2, y: MAP_HEIGHT / 2 };
 
 export type MapSkillNode = {
@@ -233,13 +266,14 @@ export function layoutMap(categories: EnrichedCategory[]): MapLayout {
     // Fan the skills outward, away from the centre.
     const outward = Math.atan2(y - MAP_CENTER.y, x - MAP_CENTER.x);
     const total = category.skills.length;
-    const spread = Math.min(124, 31 * Math.max(total - 1, 0)) * DEG;
+    const spread = Math.min(150, 31 * Math.max(total - 1, 0)) * DEG;
 
     category.skills.forEach((skill, j) => {
       const t = total === 1 ? 0 : j / (total - 1) - 0.5;
       const a = outward + spread * t;
-      const sx = round(x + SKILL_RADIUS * Math.cos(a));
-      const sy = round(y + SKILL_RADIUS * Math.sin(a));
+      const radius = SKILL_RADIUS + Math.max(total - 5, 0) * 11;
+      const sx = round(x + radius * Math.cos(a));
+      const sy = round(y + radius * Math.sin(a));
       // Labels face away from their hub; near-vertical nodes get a centred label above/below.
       const dx = sx - x;
       const vertical = Math.abs(dx) < 26;
@@ -263,14 +297,32 @@ export function relatedSkillIds(layout: MapLayout, skillId: string): Set<string>
   const target = layout.skills.find((n) => n.skill.id === skillId);
   const related = new Set<string>();
   if (!target) return related;
-  const labels = new Set(target.skill.sources.map((s) => `${s.kind}:${s.label}`));
+  // "Listed on resume" is not a shared context, so it never links skills together.
+  const shared = (sources: EvidenceSource[]) => sources.filter((s) => s.kind !== "listed");
+  const labels = new Set(shared(target.skill.sources).map((s) => `${s.kind}:${s.label}`));
   if (labels.size === 0) return related;
 
   for (const node of layout.skills) {
     if (node.skill.id === skillId) continue;
-    if (node.skill.sources.some((s) => labels.has(`${s.kind}:${s.label}`))) {
+    if (shared(node.skill.sources).some((s) => labels.has(`${s.kind}:${s.label}`))) {
       related.add(node.skill.id);
     }
   }
   return related;
+}
+
+/** Greedy word-wrap so long skill names stay inside the map instead of being clipped. */
+export function wrapLabel(label: string, maxChars = 17): string[] {
+  const lines: string[] = [];
+  let current = "";
+  for (const word of label.split(" ")) {
+    if (current && `${current} ${word}`.length > maxChars) {
+      lines.push(current);
+      current = word;
+    } else {
+      current = current ? `${current} ${word}` : word;
+    }
+  }
+  if (current) lines.push(current);
+  return lines;
 }

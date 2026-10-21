@@ -13,7 +13,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
-import { COMMAND_PALETTE_EVENT } from "@/components/layout/command-palette";
+import { COMMAND_PALETTE_EVENT } from "@/lib/lab-events";
 import { NAV_LINKS, siteConfig } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 

@@ -8,16 +8,16 @@ import { cn } from "@/lib/utils";
 
 const SEVERITY_STYLE: Record<Severity, { dot: string; text: string }> = {
   info: { dot: "bg-muted-foreground/50", text: "text-muted-foreground" },
-  low: { dot: "bg-sky-500", text: "text-sky-600 dark:text-sky-400" },
-  medium: { dot: "bg-amber-500", text: "text-amber-600 dark:text-amber-400" },
-  high: { dot: "bg-orange-500", text: "text-orange-600 dark:text-orange-400" },
-  critical: { dot: "bg-red-500", text: "text-red-600 dark:text-red-400" },
+  low: { dot: "bg-sky-500", text: "text-sky-700 dark:text-sky-400" },
+  medium: { dot: "bg-amber-500", text: "text-amber-700 dark:text-amber-400" },
+  high: { dot: "bg-orange-500", text: "text-orange-700 dark:text-orange-400" },
+  critical: { dot: "bg-red-500", text: "text-red-700 dark:text-red-400" },
 };
 
 const STATUS_STYLE: Record<Alert["status"], string> = {
-  suspicious: "border-red-500/40 bg-red-500/10 text-red-600 dark:text-red-400",
-  review: "border-amber-500/40 bg-amber-500/10 text-amber-600 dark:text-amber-400",
-  "likely benign": "border-emerald-500/40 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+  suspicious: "border-red-500/40 bg-red-500/10 text-red-700 dark:text-red-400",
+  review: "border-amber-500/40 bg-amber-500/10 text-amber-700 dark:text-amber-400",
+  "likely benign": "border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400",
 };
 
 export function LogLab() {
@@ -158,7 +158,7 @@ export function LogLab() {
         {/* Detections */}
         <div className="flex flex-col gap-3 rounded-2xl border border-border/60 bg-card/50 p-5">
           <div className="flex items-baseline justify-between">
-            <h4 className="text-sm font-semibold">Detections</h4>
+            <h3 className="text-sm font-semibold">Detections</h3>
             <span className="text-xs text-muted-foreground">{alerts.length} rules fired</span>
           </div>
           <ul className="flex max-h-[26rem] flex-col gap-2 overflow-y-auto pr-1">
@@ -226,7 +226,7 @@ export function LogLab() {
       <div className="rounded-2xl border border-border/60 bg-card/50 p-5 sm:p-6">
         <div className="mb-4 flex items-center gap-2">
           <AlertOctagon className="size-4 text-brand" aria-hidden="true" />
-          <h4 className="text-sm font-semibold">Reconstructed incident timeline</h4>
+          <h3 className="text-sm font-semibold">Reconstructed incident timeline</h3>
         </div>
         <ol className="relative ml-2 flex flex-col gap-4 border-l border-border pl-6">
           {timeline.map((a, i) => (

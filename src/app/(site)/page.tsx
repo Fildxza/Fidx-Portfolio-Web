@@ -23,6 +23,15 @@ export default function HomePage() {
       "@type": "PostalAddress",
       addressLocality: siteConfig.location,
     },
+    alumniOf: {
+      "@type": "CollegeOrUniversity",
+      name: "Universiti Tun Abdul Razak (UNIRAZAK)",
+    },
+    knowsAbout: ["Digital forensics", "Cybersecurity", "OSINT", "IT support", "Network diagnostics", "Python"],
+    hasCredential: {
+      "@type": "EducationalOccupationalCredential",
+      name: "CompTIA Security+ (SY0-701)",
+    },
     sameAs: [siteConfig.links.github, siteConfig.links.linkedin],
   };
 

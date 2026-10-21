@@ -18,7 +18,7 @@ export const ABOUT_TEXT = `I'm an IT student based in Penang, Malaysia, currentl
 
 That mix gives me a practical, troubleshooting-first mindset: I've diagnosed faults across HVAC and BAS networks, kept banking apps running for internal teams, and dug through logs to catch problems before they became outages. Lately I've been pointing that same instinct toward cybersecurity and digital forensics, building BocorCheck, an OSINT-based tool that turns raw breach data into plain-language risk scores people can actually act on.
 
-I hold a CompTIA Security+ certification and I'm looking for an IT internship where I can keep building on infrastructure, networking, and security fundamentals in a real professional environment.`;
+I hold a CompTIA Security+ certification and I'm currently undergoing industrial training, where I'm building on infrastructure, networking, and security fundamentals in a real professional environment.`;
 
 export const EXPERIENCE: Experience[] = [
   {
@@ -58,7 +58,7 @@ export const EXPERIENCE: Experience[] = [
     company: "Antah Schindler Sdn. Bhd.",
     location: "Malaysia",
     start_date: "2017-08-01",
-    end_date: "2018-08-01",
+    end_date: "2018-05-01",
     is_current: false,
     bullets: [
       "Installed and upgraded elevator system software, controllers, and diagnostic tools across multiple sites.",
@@ -66,6 +66,48 @@ export const EXPERIENCE: Experience[] = [
       "Carried out routine inspections to maintain operational stability and safety compliance standards.",
     ],
     sort_order: 3,
+  },
+  {
+    id: "exp-hotel",
+    role: "Technician, Audio Visual & Electrical/Mechanical/Civil",
+    company: "Shardu Enterprise Sdn. Bhd. (Hotel Maluri)",
+    location: "Malaysia",
+    start_date: "2019-11-01",
+    end_date: "2021-09-01",
+    is_current: false,
+    bullets: [
+      "Delivered reliable event support by setting up and operating PA and audio-visual systems for hotel functions and events.",
+      "Maintained uninterrupted hotel operations by handling electrical, mechanical, and civil maintenance tasks across the building.",
+    ],
+    sort_order: 4,
+  },
+  {
+    id: "exp-mrt",
+    role: "Building Maintenance Technician",
+    company: "Operasi Jitu Sdn. Bhd. (MRT Taman Midah)",
+    location: "Malaysia",
+    start_date: "2018-06-01",
+    end_date: "2019-07-01",
+    is_current: false,
+    bullets: [
+      "Ensured building system reliability by attending to and following up with subcontractors on fire alarm, parking machine, and electrical systems.",
+      "Reduced unresolved defects by monitoring CCTV, computers, servers, and parking sensors and reporting faults for prompt resolution.",
+    ],
+    sort_order: 5,
+  },
+  {
+    id: "exp-acmv",
+    role: "Technician ACMV",
+    company: "Extechpro (M) Sdn. Bhd.",
+    location: "KLCC Petronas Tower 3",
+    start_date: "2014-03-01",
+    end_date: "2016-07-01",
+    is_current: false,
+    bullets: [
+      "Checked and recorded heat exchanger and temperature readings each morning, and led daily tools-box safety briefings.",
+      "Maintained chiller water pump pressure, split units, fan coil units (FCU), cassette units, and air-handling units (AHU), including VSD and BCS-integrated VAV systems.",
+    ],
+    sort_order: 6,
   },
 ];
 
@@ -77,7 +119,7 @@ export const EDUCATION: Education[] = [
     field: "Long-Distance Learning",
     start_date: "2024-01-01",
     end_date: null,
-    score: "CGPA: 3.79",
+    score: "CGPA: 3.85",
     sort_order: 1,
   },
   {
@@ -135,10 +177,11 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
     name: "IT Support & Infrastructure",
     sort_order: 1,
     skills: [
-      { id: "s-1", category_id: "cat-support", name: "Hardware & Software Troubleshooting", proficiency: 90, sort_order: 1 },
-      { id: "s-2", category_id: "cat-support", name: "Helpdesk Ticketing (Zendesk)", proficiency: 85, sort_order: 2 },
-      { id: "s-3", category_id: "cat-support", name: "Virtualization", proficiency: 75, sort_order: 3 },
-      { id: "s-4", category_id: "cat-support", name: "Preventive Maintenance", proficiency: 85, sort_order: 4 },
+      { id: "s-1", category_id: "cat-support", name: "Hardware & Software Troubleshooting", proficiency: null, sort_order: 1 },
+      { id: "s-2", category_id: "cat-support", name: "Helpdesk Ticketing (Zendesk)", proficiency: null, sort_order: 2 },
+      { id: "s-3", category_id: "cat-support", name: "Virtualization (VMware, VirtualBox)", proficiency: null, sort_order: 3 },
+      { id: "s-4", category_id: "cat-support", name: "Preventive Maintenance", proficiency: null, sort_order: 4 },
+      { id: "s-17", category_id: "cat-support", name: "Windows, Ubuntu & Kali Linux", proficiency: null, sort_order: 5 },
     ],
   },
   {
@@ -146,9 +189,9 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
     name: "Networking",
     sort_order: 2,
     skills: [
-      { id: "s-5", category_id: "cat-network", name: "LAN/WAN Diagnostics", proficiency: 80, sort_order: 1 },
-      { id: "s-6", category_id: "cat-network", name: "TCP/IP", proficiency: 78, sort_order: 2 },
-      { id: "s-7", category_id: "cat-network", name: "Building Automation Systems (BAS)", proficiency: 85, sort_order: 3 },
+      { id: "s-5", category_id: "cat-network", name: "LAN/WAN Diagnostics", proficiency: null, sort_order: 1 },
+      { id: "s-6", category_id: "cat-network", name: "TCP/IP", proficiency: null, sort_order: 2 },
+      { id: "s-7", category_id: "cat-network", name: "Building Automation Systems (BAS)", proficiency: null, sort_order: 3 },
     ],
   },
   {
@@ -156,10 +199,14 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
     name: "Security & Forensics",
     sort_order: 3,
     skills: [
-      { id: "s-8", category_id: "cat-security", name: "CompTIA Security+", proficiency: 80, sort_order: 1 },
-      { id: "s-9", category_id: "cat-security", name: "OSINT", proficiency: 78, sort_order: 2 },
-      { id: "s-10", category_id: "cat-security", name: "Have I Been Pwned API", proficiency: 75, sort_order: 3 },
-      { id: "s-11", category_id: "cat-security", name: "Computer Forensics Fundamentals", proficiency: 72, sort_order: 4 },
+      { id: "s-8", category_id: "cat-security", name: "CompTIA Security+", proficiency: null, sort_order: 1 },
+      { id: "s-9", category_id: "cat-security", name: "OSINT", proficiency: null, sort_order: 2 },
+      { id: "s-10", category_id: "cat-security", name: "Have I Been Pwned API", proficiency: null, sort_order: 3 },
+      { id: "s-11", category_id: "cat-security", name: "Computer Forensics Fundamentals", proficiency: null, sort_order: 4 },
+      { id: "s-18", category_id: "cat-security", name: "Wireshark & Nmap", proficiency: null, sort_order: 5 },
+      { id: "s-19", category_id: "cat-security", name: "Autopsy, FTK Imager & Volatility", proficiency: null, sort_order: 6 },
+      { id: "s-20", category_id: "cat-security", name: "ALEAPP / iLEAPP", proficiency: null, sort_order: 7 },
+      { id: "s-21", category_id: "cat-security", name: "Sherlock, SpiderFoot & Maltego", proficiency: null, sort_order: 8 },
     ],
   },
   {
@@ -167,26 +214,23 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
     name: "Development",
     sort_order: 4,
     skills: [
-      { id: "s-12", category_id: "cat-dev", name: "Python", proficiency: 75, sort_order: 1 },
-      { id: "s-13", category_id: "cat-dev", name: "Flask", proficiency: 70, sort_order: 2 },
-      { id: "s-14", category_id: "cat-dev", name: "MySQL", proficiency: 70, sort_order: 3 },
-      { id: "s-15", category_id: "cat-dev", name: "Ollama / Local LLMs", proficiency: 65, sort_order: 4 },
-      { id: "s-16", category_id: "cat-dev", name: "Agile SDLC", proficiency: 75, sort_order: 5 },
+      { id: "s-12", category_id: "cat-dev", name: "Python", proficiency: null, sort_order: 1 },
+      { id: "s-13", category_id: "cat-dev", name: "Flask", proficiency: null, sort_order: 2 },
+      { id: "s-14", category_id: "cat-dev", name: "MySQL", proficiency: null, sort_order: 3 },
+      { id: "s-15", category_id: "cat-dev", name: "Ollama / Local LLMs", proficiency: null, sort_order: 4 },
+      { id: "s-16", category_id: "cat-dev", name: "Agile SDLC", proficiency: null, sort_order: 5 },
+      { id: "s-22", category_id: "cat-dev", name: "Basic Java", proficiency: null, sort_order: 6 },
     ],
   },
 ];
 
 export const CERTIFICATES: Certificate[] = [
-  {
-    id: "cert-security-plus",
-    title: "CompTIA Security+",
-    issuer: "CompTIA",
-    issue_date: null,
-    credential_url: null,
-    file_url: null,
-    image_url: null,
-    sort_order: 1,
-  },
+  { id: "cert-security-plus", title: "CompTIA Security+ (SY0-701)", issuer: "CompTIA", issue_date: "2025", credential_url: null, file_url: null, image_url: null, sort_order: 1 },
+  { id: "cert-social-eng", title: "Social Engineering & Phishing in the Age of AI", issuer: "", issue_date: "2025", credential_url: null, file_url: null, image_url: null, sort_order: 2 },
+  { id: "cert-java", title: "Java", issuer: "LearnQuest", issue_date: "2025", credential_url: null, file_url: null, image_url: null, sort_order: 3 },
+  { id: "cert-uc-hw-sw", title: "UC Hardware and Software", issuer: "", issue_date: "2024", credential_url: null, file_url: null, image_url: null, sort_order: 4 },
+  { id: "cert-cyber-awareness", title: "Cybersecurity Awareness", issuer: "", issue_date: "2024", credential_url: null, file_url: null, image_url: null, sort_order: 5 },
+  { id: "cert-apel", title: "APEL T6", issuer: "", issue_date: "2024", credential_url: null, file_url: null, image_url: null, sort_order: 6 },
 ];
 
 // No achievements were listed on the resume — add real ones from /admin.

@@ -1,3 +1,5 @@
+export const COMMAND_PALETTE_EVENT = "open-command-palette";
+
 export type LabId = "forensics" | "risk" | "logs" | "network";
 
 /** Dispatched on `window` (detail: LabId) to switch the Interactive Labs tab. */

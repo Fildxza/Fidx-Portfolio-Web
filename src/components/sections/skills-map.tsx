@@ -8,6 +8,7 @@ import {
   MAP_CENTER,
   MAP_HEIGHT,
   MAP_WIDTH,
+  wrapLabel,
   type MapLayout,
   type MapSkillNode,
 } from "@/lib/skills-map";
@@ -246,6 +247,10 @@ export function SkillsMap({
         const color = layout.hubs[node.categoryIndex].category.color;
         const isFocus = focusNode?.skill.id === node.skill.id;
         const isRelated = related.has(node.skill.id);
+        const lines = wrapLabel(node.skill.label);
+        // Keep the wrapped block centred on the node (or growing away from it for top/bottom labels).
+        const firstDy =
+          node.anchor === "middle" ? (node.labelDy < 0 ? -(lines.length - 1) * 14 : 0) : -(lines.length - 1) * 7;
         return (
           <g key={node.skill.id} transform={`translate(${node.x} ${node.y})`}>
             <motion.g
@@ -276,11 +281,15 @@ export function SkillsMap({
                     x={node.labelDx}
                     y={node.labelDy}
                     textAnchor={node.anchor}
-                    fontSize={14}
+                    fontSize={15}
                     fontWeight={isFocus ? 600 : 500}
                     className="fill-foreground max-sm:hidden"
                   >
-                    {node.skill.label}
+                    {lines.map((line, li) => (
+                      <tspan key={li} x={node.labelDx} dy={li === 0 ? firstDy : 14}>
+                        {line}
+                      </tspan>
+                    ))}
                   </text>
                   {/* Generous pointer target; keyboard users use the list beside the map. */}
                   <circle

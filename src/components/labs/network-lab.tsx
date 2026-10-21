@@ -236,9 +236,9 @@ export function NetworkLab() {
             ) : (
               <CheckCircle2 className="size-4 text-emerald-500" aria-hidden="true" />
             )}
-            <h4 className="text-sm font-semibold">
+            <h3 className="text-sm font-semibold">
               {path.label} — {blocked ? "blocked" : "allowed"}
-            </h4>
+            </h3>
           </div>
           <p className="mb-4 text-xs leading-relaxed text-muted-foreground">{path.summary}</p>
           <ol className="flex flex-col gap-2.5">
@@ -275,7 +275,7 @@ export function NetworkLab() {
           <div className="min-h-40 rounded-2xl border border-border/60 bg-card/50 p-5" aria-live="polite">
             {selected ? (
               <>
-                <h4 className="text-sm font-semibold">{selected.label}</h4>
+                <h3 className="text-sm font-semibold">{selected.label}</h3>
                 <dl className="mt-3 flex flex-col gap-2 text-xs leading-relaxed">
                   <div>
                     <dt className="font-semibold">Role</dt>
@@ -286,7 +286,7 @@ export function NetworkLab() {
                     <dd className="text-muted-foreground">{selected.risk}</dd>
                   </div>
                   <div>
-                    <dt className="font-semibold text-emerald-600 dark:text-emerald-400">Defensive practice</dt>
+                    <dt className="font-semibold text-emerald-700 dark:text-emerald-400">Defensive practice</dt>
                     <dd className="text-muted-foreground">{selected.defence}</dd>
                   </div>
                 </dl>

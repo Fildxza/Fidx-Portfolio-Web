@@ -30,7 +30,7 @@ insert into public.experience (role, company, location, start_date, end_date, is
 
 -- education
 insert into public.education (institution, credential, field, start_date, end_date, score, sort_order) values
-('Universiti Tun Abdul Razak (UNIRAZAK)', 'Bachelor of Information Technology (Computer Forensics), Hons', 'Long-Distance Learning', '2024-01-01', null, 'CGPA: 3.79', 1),
+('Universiti Tun Abdul Razak (UNIRAZAK)', 'Bachelor of Information Technology (Computer Forensics), Hons', 'Long-Distance Learning', '2024-01-01', null, 'CGPA: 3.85', 1),
 ('Sijil Akademi Binaan Malaysia (ACMV)', 'Level 1–3', null, '2014-01-01', '2016-01-01', null, 2);
 
 -- projects
