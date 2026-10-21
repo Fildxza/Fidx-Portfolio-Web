@@ -164,9 +164,9 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
 
         {study.gallery && study.gallery.length > 0 && (
           <Section title="Screenshots">
-            <ul className="grid gap-5 sm:grid-cols-2">
+            <ul className={study.gallery.length === 1 ? "max-w-md" : "grid gap-5 sm:grid-cols-2"}>
               {study.gallery.map((shot, i) => (
-                <li key={shot.src} className={i === 0 ? "sm:col-span-2" : undefined}>
+                <li key={shot.src} className={study.gallery!.length > 1 && i === 0 ? "sm:col-span-2" : undefined}>
                   <figure className="flex flex-col gap-2">
                     <a
                       href={shot.src}
@@ -178,8 +178,15 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
                       <Image
                         src={shot.src}
                         alt={shot.alt}
-                        {...GALLERY_IMAGE_SIZE}
-                        sizes={i === 0 ? "(min-width: 768px) 768px, 100vw" : "(min-width: 768px) 372px, 100vw"}
+                        width={shot.width ?? GALLERY_IMAGE_SIZE.width}
+                        height={shot.height ?? GALLERY_IMAGE_SIZE.height}
+                        sizes={
+                          study.gallery!.length === 1
+                            ? "(min-width: 448px) 448px, 100vw"
+                            : i === 0
+                              ? "(min-width: 768px) 768px, 100vw"
+                              : "(min-width: 768px) 372px, 100vw"
+                        }
                         className="h-auto w-full"
                       />
                     </a>
@@ -188,9 +195,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
                 </li>
               ))}
             </ul>
-            <p className="mt-3 text-xs text-muted-foreground">
-              Captured from the running app, using sample data created through the app itself. Select an image to open it full size.
-            </p>
+            {study.galleryNote && <p className="mt-3 text-xs text-muted-foreground">{study.galleryNote}</p>}
           </Section>
         )}
 

@@ -64,10 +64,12 @@ export type CaseStudy = {
   /** Screenshot used as the card thumbnail instead of the generated architecture thumbnail. */
   cover?: { src: string; alt: string };
   /** Real screenshots of the running project, shown on its case-study page only. */
-  gallery?: { src: string; alt: string; caption: string }[];
+  gallery?: { src: string; alt: string; caption: string; width?: number; height?: number }[];
+  /** Note shown under the gallery, e.g. what data the screenshots show. */
+  galleryNote?: string;
 };
 
-/** Pixel size of every gallery screenshot (captured at a fixed 1440 × 1000 viewport). */
+/** Default pixel size of a gallery screenshot (the Ghost captures use a fixed 1440 × 1000 viewport). */
 export const GALLERY_IMAGE_SIZE = { width: 1440, height: 1000 } as const;
 
 export const CASE_STUDIES: CaseStudy[] = [
@@ -124,8 +126,19 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     future: [],
     evidence:
-      "Based on the final-year-project summary on my resume. The repository is private, so the implementation has not been independently reviewed for this page.",
+      "Based on the final-year-project summary on my resume and a screenshot of the dashboard. The implementation has not been independently reviewed for this page.",
     relatedLab: { label: "Try the simulated risk-scoring demo" },
+    gallery: [
+      {
+        src: "/images/projects/bocorcheck/dashboard.jpg",
+        alt: "BocorCheck dashboard with an investigation form in demo-data mode and a breach heatmap over Malaysia with risk markers",
+        caption: "Dashboard: the investigation form and the Global Breach Heatmap, running in demo-data mode.",
+        width: 715,
+        height: 790,
+      },
+    ],
+    galleryNote:
+      "The map shows simulated breach incidents from demo-data mode, not real people's data. Select the image to open it full size.",
   },
   {
     slug: "emv-smart-card-security-analysis",
@@ -761,6 +774,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     evidence:
       "Verified from the public README, the source tree and the project's own screenshots, which the README describes as real captures of the running app. The README reports 71 backend tests, 16 frontend tests and a 23-step browser journey; I have not run them or the app for this page. Hosted under my second GitHub account, fxfanxy.",
+    galleryNote:
+      "Captured from the running app, using sample data created through the app itself. Select an image to open it full size.",
     cover: {
       src: "/images/projects/ghost/command-centre.png",
       alt: "FIDX-GHOST Command Overview screen showing case metrics, a geospatial map, quick actions and system health",
