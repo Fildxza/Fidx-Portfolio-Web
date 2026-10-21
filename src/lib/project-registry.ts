@@ -570,12 +570,12 @@ export const CASE_STUDIES: CaseStudy[] = [
     summary:
       "A bilingual (Bahasa Melayu and English), mobile-first website for a Malaysian air-conditioning business, built around a booking request, WhatsApp contact and a service-area map.",
     categories: ["Web Applications"],
-    status: "Built, not yet deployed",
+    status: "Live",
     visibility: "public",
     repoUrl: "https://github.com/Fildxza/Website-AJAircondServices",
     repoOwner: "Fildxza",
     contributionType: "owner",
-    liveUrl: null,
+    liveUrl: "https://ajaircondservices.netlify.app/",
     featured: false,
     published: true,
     clientNote:
@@ -612,16 +612,16 @@ export const CASE_STUDIES: CaseStudy[] = [
       { name: "Reviews section (dated snapshot of Google reviews)", status: "implemented" },
       { name: "SEO: structured data, sitemap and robots", status: "implemented" },
       { name: "Unit tests for routing, booking, WhatsApp, gallery, language and map", status: "implemented" },
+      { name: "Hosted live on Netlify", status: "implemented" },
       { name: "Lead tracking and growth roadmap", status: "planned", detail: "Documented as specifications and guides in the repository." },
     ],
     security: ["No environment variables or secrets are required, per the project's deployment notes."],
     limitations: [
-      "Not deployed yet: the project's own notes (20 Oct 2026) say no domain exists and the first Netlify deploy is still to do.",
-      "The Bahasa Melayu copy is waiting for proof-reading by the owner.",
+      "Currently served from a Netlify address rather than a custom domain.",
     ],
-    future: ["First deployment, then verifying the live URL against the project's checklist."],
+    future: ["A custom domain and lead tracking, both listed in the project's own roadmap documents."],
     evidence:
-      "Verified from the public README, the project's deployment and feature documentation, its content files and test files. I have not executed the site for this page.",
+      "Verified from the public README, the project's documentation, content files and test files, plus a check of the live site on 21 Oct 2026: it responds, defaults to Bahasa Melayu, and serves structured data, robots.txt and a sitemap.",
   },
   {
     slug: "nuha-money-management",
