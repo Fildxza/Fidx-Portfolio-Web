@@ -61,7 +61,7 @@ export async function Hero() {
 
           <div className="flex flex-wrap items-center gap-3 pt-2">
             <Button
-              render={<a href={resumeUrl ?? "/resume"} download={Boolean(resumeUrl)} />}
+              render={<a href={resumeUrl ?? "/resume"} download={resumeUrl ? "Mohamad-Fildza-Azman-Resume.pdf" : undefined} />}
               size="lg"
               className="rounded-full shadow-lg shadow-brand/20 transition-transform hover:-translate-y-0.5"
             >

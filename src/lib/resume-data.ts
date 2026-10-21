@@ -30,9 +30,9 @@ export const EXPERIENCE: Experience[] = [
     end_date: "2024-06-01",
     is_current: false,
     bullets: [
-      "Monitored the HVAC system and its network of temperature sensors, controllers, and monitoring panels across a multi-tenant commercial site, diagnosing faults to minimise downtime.",
-      "Investigated system alerts and connectivity issues, documenting root causes and resolutions to support faster troubleshooting.",
-      "Produced system diagnostic and incident reports used by the facilities team to track recurring issues.",
+      "Investigated HVAC downtime across a multi-tenant commercial site by monitoring temperature sensors, controllers, and monitoring panels, and diagnosing faults before escalation.",
+      "Investigated system alerts and connectivity failures, and documented recurring issues and root causes for the facilities team.",
+      "Prepared diagnostic and incident reports to document recurring HVAC and network-related issues.",
     ],
     sort_order: 1,
   },
@@ -45,10 +45,9 @@ export const EXPERIENCE: Experience[] = [
     end_date: "2023-01-01",
     is_current: false,
     bullets: [
-      "Logged, tracked, and resolved first-line hardware, software, and connectivity tickets using Zendesk, maintaining consistent system uptime.",
-      "Configured and maintained the Sun Life app (CIMB bank's insurance application) for internal users, handling setup, updates, and troubleshooting.",
-      "Ran preventive maintenance checks across end-user devices to reduce recurring fault tickets.",
-      "Diagnosed basic network connectivity issues (LAN/WAN, TCP/IP) to maintain stable operations.",
+      "Maintained consistent system uptime by logging, tracking, and resolving first-line hardware, software, and connectivity tickets in Zendesk.",
+      "Configured, maintained, and provided technical support for the Sun Life insurance application used by CIMB employees, including setup, updates, and troubleshooting. Reduced recurring fault tickets through scheduled preventive maintenance checks across end-user devices.",
+      "Resolved LAN/WAN and TCP/IP connectivity issues to maintain stable daily operations.",
     ],
     sort_order: 2,
   },
@@ -62,8 +61,8 @@ export const EXPERIENCE: Experience[] = [
     is_current: false,
     bullets: [
       "Installed and upgraded elevator system software, controllers, and diagnostic tools across multiple sites.",
-      "Analysed monitoring logs and performance data to detect irregularities before they caused system failure.",
-      "Carried out routine inspections to maintain operational stability and safety compliance standards.",
+      "Detected irregularities before failure by analyzing monitoring logs and performance data.",
+      "Maintained safety compliance through routine operational inspections.",
     ],
     sort_order: 3,
   },
@@ -226,11 +225,12 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
 
 export const CERTIFICATES: Certificate[] = [
   { id: "cert-security-plus", title: "CompTIA Security+ (SY0-701)", issuer: "CompTIA", issue_date: "2025", credential_url: null, file_url: null, image_url: null, sort_order: 1 },
-  { id: "cert-social-eng", title: "Social Engineering & Phishing in the Age of AI", issuer: "", issue_date: "2025", credential_url: null, file_url: null, image_url: null, sort_order: 2 },
-  { id: "cert-java", title: "Java", issuer: "LearnQuest", issue_date: "2025", credential_url: null, file_url: null, image_url: null, sort_order: 3 },
-  { id: "cert-uc-hw-sw", title: "UC Hardware and Software", issuer: "", issue_date: "2024", credential_url: null, file_url: null, image_url: null, sort_order: 4 },
-  { id: "cert-cyber-awareness", title: "Cybersecurity Awareness", issuer: "", issue_date: "2024", credential_url: null, file_url: null, image_url: null, sort_order: 5 },
-  { id: "cert-apel", title: "APEL T6", issuer: "", issue_date: "2024", credential_url: null, file_url: null, image_url: null, sort_order: 6 },
+  { id: "cert-cidb", title: "Construction Personnel Registration (Green Card)", issuer: "CIDB Malaysia", issue_date: null, credential_url: null, file_url: null, image_url: null, sort_order: 2 },
+  { id: "cert-social-eng", title: "Social Engineering & Phishing in the Age of AI", issuer: "", issue_date: "2025", credential_url: null, file_url: null, image_url: null, sort_order: 3 },
+  { id: "cert-java", title: "Java", issuer: "LearnQuest", issue_date: "2025", credential_url: null, file_url: null, image_url: null, sort_order: 4 },
+  { id: "cert-uc-hw-sw", title: "UC Hardware and Software", issuer: "", issue_date: "2024", credential_url: null, file_url: null, image_url: null, sort_order: 5 },
+  { id: "cert-cyber-awareness", title: "Cybersecurity Awareness", issuer: "", issue_date: "2024", credential_url: null, file_url: null, image_url: null, sort_order: 6 },
+  { id: "cert-apel", title: "APEL T6", issuer: "", issue_date: "2024", credential_url: null, file_url: null, image_url: null, sort_order: 7 },
 ];
 
 // No achievements were listed on the resume — add real ones from /admin.
