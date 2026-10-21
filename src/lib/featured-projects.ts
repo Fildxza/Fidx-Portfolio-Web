@@ -1,11 +1,15 @@
 import { FEATURED_REPO_ORDER } from "@/lib/constants";
+import { getCaseStudyByRepo } from "@/lib/project-registry";
 import type { FeaturedProject, GithubRepo, Project } from "@/lib/types";
 
 /**
- * Builds the curated Featured Projects list in exact FEATURED_REPO_ORDER,
- * preferring live GitHub data (stars, last updated, language) and falling
- * back to manual/admin-authored content for repos that are private or not
- * yet pushed. Repos with no live data AND no manual entry are skipped.
+ * Builds the Featured Projects list in exact FEATURED_REPO_ORDER.
+ *
+ * Three sources are merged per project:
+ *  - the curated case-study registry (narrative: summary, stack, status),
+ *  - live GitHub data (stars, last push, repo URL) when the repo is public,
+ *  - manual/admin content (image, live demo URL) as a fallback.
+ * A repo with no live data, no registry entry and no manual entry is skipped.
  */
 export function buildFeaturedProjects(
   manualProjects: Project[],
@@ -18,39 +22,34 @@ export function buildFeaturedProjects(
     const manual = manualProjects.find(
       (p) => p.github_repo_name?.toLowerCase() === name.toLowerCase()
     );
+    const study = getCaseStudyByRepo(name);
 
-    if (!liveRepo && !manual) continue;
+    if (!liveRepo && !manual && !study) continue;
 
-    if (liveRepo) {
-      projects.push({
-        key: name,
-        title: manual?.title ?? liveRepo.name,
-        description: manual?.description ?? liveRepo.description ?? "No description provided.",
-        techStack:
-          manual?.tech_stack && manual.tech_stack.length > 0
-            ? manual.tech_stack
-            : [liveRepo.language, ...liveRepo.topics].filter((v): v is string => Boolean(v)),
-        repoUrl: liveRepo.html_url,
-        liveUrl: manual?.live_url ?? liveRepo.homepage ?? null,
-        imageUrl: manual?.image_url ?? null,
-        stars: liveRepo.stargazers_count,
-        lastUpdated: liveRepo.pushed_at,
-        isPrivate: false,
-      });
-    } else if (manual) {
-      projects.push({
-        key: name,
-        title: manual.title,
-        description: manual.description,
-        techStack: manual.tech_stack,
-        repoUrl: manual.repo_url,
-        liveUrl: manual.live_url,
-        imageUrl: manual.image_url,
-        stars: null,
-        lastUpdated: null,
-        isPrivate: true,
-      });
-    }
+    // A repo that is not visible through the public API is treated as private,
+    // and its URL is never linked (it would 404 for visitors).
+    const isPrivate = !liveRepo || study?.visibility === "private";
+
+    projects.push({
+      key: name,
+      title: study?.title ?? manual?.title ?? liveRepo?.name ?? name,
+      description:
+        study?.summary ?? manual?.description ?? liveRepo?.description ?? "No description provided.",
+      techStack:
+        study?.stack ??
+        (manual?.tech_stack && manual.tech_stack.length > 0
+          ? manual.tech_stack
+          : [liveRepo?.language, ...(liveRepo?.topics ?? [])].filter((v): v is string => Boolean(v))),
+      repoUrl: isPrivate ? null : (liveRepo?.html_url ?? manual?.repo_url ?? null),
+      liveUrl: study?.liveUrl ?? manual?.live_url ?? liveRepo?.homepage ?? null,
+      imageUrl: manual?.image_url ?? null,
+      stars: liveRepo ? liveRepo.stargazers_count : null,
+      lastUpdated: liveRepo?.pushed_at ?? null,
+      isPrivate,
+      slug: study?.slug ?? null,
+      categories: study?.categories ?? [],
+      status: study?.status ?? null,
+    });
   }
 
   return projects;

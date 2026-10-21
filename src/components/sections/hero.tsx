@@ -5,6 +5,7 @@ import { GithubIcon, LinkedinIcon } from "@/components/shared/brand-icons";
 import { ProfilePhoto } from "@/components/shared/profile-photo";
 import { HeroTyping } from "@/components/sections/hero-typing";
 import { HeroEntrance, HeroPhotoFrame } from "@/components/sections/hero-motion";
+import { HeroGlance } from "@/components/sections/hero-glance";
 import { siteConfig } from "@/lib/constants";
 import { getLocalProfilePhoto, getLocalResumeUrl } from "@/lib/local-assets";
 import { getProfilePhotoUrl, getResumeUrl } from "@/lib/queries";
@@ -106,6 +107,8 @@ export async function Hero() {
           </div>
         </HeroPhotoFrame>
       </div>
+
+      <HeroGlance />
 
       <div className="flex justify-center pb-10">
         <Link

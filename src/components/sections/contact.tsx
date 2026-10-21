@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CheckCircle2, Loader2, Mail, MapPin, Phone, Send } from "lucide-react";
+import { AlertTriangle, CheckCircle2, Loader2, Mail, MapPin, Phone, Send } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -23,6 +23,8 @@ const CONTACT_ITEMS = [
 export function Contact() {
   const [isPending, startTransition] = useTransition();
   const [submitted, setSubmitted] = useState(false);
+  // Set when the message could not be saved, so the visitor can still reach me.
+  const [failure, setFailure] = useState<{ values: ContactFormValues; reason: string } | null>(null);
 
   const {
     register,
@@ -35,13 +37,19 @@ export function Contact() {
 
   const onSubmit = (values: ContactFormValues) => {
     startTransition(async () => {
-      const result = await submitContactForm(values);
+      setFailure(null);
+      setSubmitted(false);
+      const result = await submitContactForm(values).catch(() => ({
+        success: false as const,
+        error: "The message could not be sent right now.",
+      }));
       if (result.success) {
         setSubmitted(true);
         reset();
         toast.success("Message sent — thanks for reaching out!");
       } else {
-        toast.error(result.error ?? "Something went wrong.");
+        setFailure({ values, reason: result.error ?? "Something went wrong." });
+        toast.error("Your message wasn't saved — you can email me directly instead.");
       }
     });
   };
@@ -97,6 +105,7 @@ export function Contact() {
                   id="name"
                   placeholder="Your name"
                   className="focus-visible:border-brand focus-visible:ring-brand/30"
+                  aria-invalid={Boolean(errors.name)}
                   {...register("name")}
                 />
                 {errors.name && (
@@ -110,6 +119,7 @@ export function Contact() {
                   type="email"
                   placeholder="you@example.com"
                   className="focus-visible:border-brand focus-visible:ring-brand/30"
+                  aria-invalid={Boolean(errors.email)}
                   {...register("email")}
                 />
                 {errors.email && (
@@ -135,7 +145,8 @@ export function Contact() {
                 rows={5}
                 placeholder="Tell me a bit about the opportunity or your question..."
                 className="focus-visible:border-brand focus-visible:ring-brand/30"
-                {...register("message")}
+                aria-invalid={Boolean(errors.message)}
+                  {...register("message")}
               />
               {errors.message && (
                 <p className="text-xs text-destructive">{errors.message.message}</p>
@@ -161,8 +172,25 @@ export function Contact() {
               Send Message
             </Button>
 
+            {failure && (
+              <div role="alert" className="flex flex-col gap-2 rounded-xl border border-destructive/40 bg-destructive/10 px-4 py-3 text-sm">
+                <p className="flex items-start gap-2 font-medium text-destructive">
+                  <AlertTriangle className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
+                  {failure.reason}
+                </p>
+                <a
+                  href={`mailto:${siteConfig.email}?subject=${encodeURIComponent(
+                    failure.values.subject || `Portfolio enquiry from ${failure.values.name}`
+                  )}&body=${encodeURIComponent(`${failure.values.message}\n\n— ${failure.values.name} (${failure.values.email})`)}`}
+                  className="w-fit font-medium text-brand underline underline-offset-4"
+                >
+                  Open an email draft with your message
+                </a>
+              </div>
+            )}
+
             {submitted && (
-              <div className="flex items-center justify-center gap-2 rounded-xl border border-brand/30 bg-brand/10 px-4 py-3 text-sm font-medium text-brand">
+              <div role="status" className="flex items-center justify-center gap-2 rounded-xl border border-brand/30 bg-brand/10 px-4 py-3 text-sm font-medium text-brand">
                 <CheckCircle2 className="size-4" />
                 Message sent successfully.
               </div>

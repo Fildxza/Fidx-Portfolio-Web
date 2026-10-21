@@ -49,6 +49,10 @@ export type FeaturedProject = {
   stars: number | null;
   lastUpdated: string | null;
   isPrivate: boolean;
+  /** Set when a curated case study exists for this project. */
+  slug: string | null;
+  categories: string[];
+  status: string | null;
 };
 
 export type SkillCategory = {
@@ -122,10 +126,11 @@ export type GithubRepo = {
 };
 
 export type GithubStats = {
-  publicRepos: number;
-  followers: number;
-  following: number;
-  totalStars: number;
-  totalForks: number;
+  /** Each metric is null when GitHub did not return it, so the UI can omit it. */
+  publicRepos: number | null;
+  followers: number | null;
+  following: number | null;
+  totalStars: number | null;
+  totalForks: number | null;
   topLanguages: { name: string; count: number; percentage: number }[];
 };

@@ -4,6 +4,7 @@ import { Experience } from "@/components/sections/experience";
 import { Education } from "@/components/sections/education";
 import { Projects } from "@/components/sections/projects";
 import { Skills } from "@/components/sections/skills";
+import { Labs } from "@/components/sections/labs";
 import { Certifications } from "@/components/sections/certifications";
 import { Achievements } from "@/components/sections/achievements";
 import { GithubActivity } from "@/components/sections/github-activity";
@@ -37,6 +38,7 @@ export default function HomePage() {
       <Education />
       <Projects />
       <Skills />
+      <Labs />
       <Certifications />
       <Achievements />
       <GithubActivity />

@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Menu } from "lucide-react";
-import { motion } from "framer-motion";
+import { Menu, Search } from "lucide-react";
+import { motion, useScroll } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -13,11 +13,13 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
+import { COMMAND_PALETTE_EVENT } from "@/components/layout/command-palette";
 import { NAV_LINKS, siteConfig } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const { scrollYProgress } = useScroll();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -64,6 +66,16 @@ export function Navbar() {
           </nav>
 
           <div className="flex items-center gap-1.5">
+            <button
+              type="button"
+              onClick={() => window.dispatchEvent(new Event(COMMAND_PALETTE_EVENT))}
+              aria-label="Open command palette"
+              className="hidden items-center gap-2 rounded-full border border-border/70 px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring lg:inline-flex"
+            >
+              <Search className="size-3.5" aria-hidden="true" />
+              Search
+              <kbd className="rounded border border-border px-1 text-[0.65rem]">Ctrl K</kbd>
+            </button>
             <ThemeToggle />
             <Button
               render={<Link href="/resume" />}
@@ -107,6 +119,11 @@ export function Navbar() {
           </div>
         </div>
       </div>
+      <motion.div
+        aria-hidden="true"
+        style={{ scaleX: scrollYProgress }}
+        className="pointer-events-none absolute inset-x-0 top-0 h-[2px] origin-left bg-brand"
+      />
     </motion.header>
   );
 }

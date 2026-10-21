@@ -9,7 +9,7 @@ export type GithubActivityEvent = {
   repoName: string;
   repoUrl: string;
   createdAt: string;
-  commitCount: number;
+  pushCount: number;
   message: string | null;
 };
 
@@ -61,58 +61,79 @@ async function fetchPinnedRepoNames(username: string): Promise<string[]> {
   }
 }
 
+const MAX_REPO_PAGES = 5;
+
+/**
+ * Fetches every public repo for the user, following pagination. Returns null
+ * (not an empty list) when GitHub could not be reached or rate-limited us, so
+ * callers can tell "no repos" apart from "no data" instead of showing zeros.
+ */
+async function fetchAllRepos(username: string): Promise<GithubRepo[] | null> {
+  const all: GithubRepo[] = [];
+  try {
+    for (let page = 1; page <= MAX_REPO_PAGES; page++) {
+      const res = await fetch(
+        `${GITHUB_API}/users/${username}/repos?per_page=100&sort=updated&page=${page}`,
+        { headers: authHeaders(), next: { revalidate: 3600 } }
+      );
+      if (!res.ok) return page === 1 ? null : all;
+      const batch = (await res.json()) as GithubRepo[];
+      if (!Array.isArray(batch)) return page === 1 ? null : all;
+      all.push(...batch);
+      if (batch.length < 100) break;
+    }
+    return all;
+  } catch {
+    return all.length > 0 ? all : null;
+  }
+}
+
 export async function getGithubRepos(
   username: string = siteConfig.githubUsername
 ): Promise<GithubRepo[]> {
-  try {
-    const [reposRes, pinnedNames] = await Promise.all([
-      fetch(`${GITHUB_API}/users/${username}/repos?per_page=100&sort=updated`, {
-        headers: authHeaders(),
-        next: { revalidate: 3600 },
-      }),
-      fetchPinnedRepoNames(username),
-    ]);
+  const [repos, pinnedNames] = await Promise.all([
+    fetchAllRepos(username),
+    fetchPinnedRepoNames(username),
+  ]);
+  if (!repos) return [];
 
-    if (!reposRes.ok) return [];
+  const pinnedSet = new Set(pinnedNames);
+  const visible = repos
+    .filter((r) => !r.fork && !r.archived)
+    .map((r) => ({ ...r, pinned: pinnedSet.has(r.name) }));
 
-    const repos = (await reposRes.json()) as GithubRepo[];
-    const pinnedSet = new Set(pinnedNames);
+  visible.sort((a, b) => {
+    if (a.pinned !== b.pinned) return a.pinned ? -1 : 1;
+    return new Date(b.pushed_at).getTime() - new Date(a.pushed_at).getTime();
+  });
 
-    const visible = repos
-      .filter((r) => !r.fork && !r.archived)
-      .map((r) => ({ ...r, pinned: pinnedSet.has(r.name) }));
-
-    visible.sort((a, b) => {
-      if (a.pinned !== b.pinned) return a.pinned ? -1 : 1;
-      return new Date(b.pushed_at).getTime() - new Date(a.pushed_at).getTime();
-    });
-
-    return visible;
-  } catch {
-    return [];
-  }
+  return visible;
 }
 
 export async function getGithubStats(
   username: string = siteConfig.githubUsername
 ): Promise<GithubStats | null> {
   try {
-    const [userRes, repos] = await Promise.all([
+    const [userRes, allRepos] = await Promise.all([
       fetch(`${GITHUB_API}/users/${username}`, {
         headers: authHeaders(),
         next: { revalidate: 3600 },
       }),
-      getGithubRepos(username),
+      fetchAllRepos(username),
     ]);
 
     if (!userRes.ok) return null;
     const user = await userRes.json();
 
-    const totalStars = repos.reduce((sum, r) => sum + r.stargazers_count, 0);
-    const totalForks = repos.reduce((sum, r) => sum + r.forks_count, 0);
+    // Stars/languages are derived from the repo list; if that request failed
+    // they are reported as unavailable (null) rather than as a misleading 0.
+    const repos = allRepos?.filter((r) => !r.fork && !r.archived) ?? null;
+
+    const totalStars = repos ? repos.reduce((sum, r) => sum + r.stargazers_count, 0) : null;
+    const totalForks = repos ? repos.reduce((sum, r) => sum + r.forks_count, 0) : null;
 
     const languageCounts = new Map<string, number>();
-    for (const repo of repos) {
+    for (const repo of repos ?? []) {
       if (!repo.language) continue;
       languageCounts.set(repo.language, (languageCounts.get(repo.language) ?? 0) + 1);
     }
@@ -128,9 +149,9 @@ export async function getGithubStats(
       .slice(0, 6);
 
     return {
-      publicRepos: user.public_repos ?? repos.length,
-      followers: user.followers ?? 0,
-      following: user.following ?? 0,
+      publicRepos: typeof user.public_repos === "number" ? user.public_repos : null,
+      followers: typeof user.followers === "number" ? user.followers : null,
+      following: typeof user.following === "number" ? user.following : null,
       totalStars,
       totalForks,
       topLanguages,
@@ -152,23 +173,33 @@ export async function getRecentActivity(
     if (!res.ok) return [];
     const events = await res.json();
 
-    return events
-      .filter((e: { type: string }) => e.type === "PushEvent")
-      .slice(0, 5)
-      .map((e: {
-        id: string;
-        repo: { name: string };
-        created_at: string;
-        payload: { commits?: { message: string }[] };
-      }) => ({
+    // Collapse repeated pushes to the same repo into one row (newest first).
+    const byRepo = new Map<string, GithubActivityEvent>();
+    for (const e of events as {
+      id: string;
+      type: string;
+      repo: { name: string };
+      created_at: string;
+      payload: { commits?: { message: string }[] };
+    }[]) {
+      if (e.type !== "PushEvent") continue;
+      const existing = byRepo.get(e.repo.name);
+      if (existing) {
+        existing.pushCount += 1;
+        continue;
+      }
+      byRepo.set(e.repo.name, {
         id: e.id,
         type: "PushEvent",
         repoName: e.repo.name,
         repoUrl: `https://github.com/${e.repo.name}`,
         createdAt: e.created_at,
-        commitCount: e.payload.commits?.length ?? 0,
+        pushCount: 1,
+        // GitHub's public events feed often omits commit messages; show one only when present.
         message: e.payload.commits?.[e.payload.commits.length - 1]?.message ?? null,
-      }));
+      });
+    }
+    return Array.from(byRepo.values()).slice(0, 5);
   } catch {
     return [];
   }
