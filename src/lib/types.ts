@@ -46,6 +46,8 @@ export type FeaturedProject = {
   repoUrl: string | null;
   liveUrl: string | null;
   imageUrl: string | null;
+  /** True when imageUrl is made artwork rather than a screenshot. */
+  imageIsIllustration: boolean;
   stars: number | null;
   lastUpdated: string | null;
   isPrivate: boolean;

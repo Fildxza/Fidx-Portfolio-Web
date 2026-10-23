@@ -62,9 +62,11 @@ export type CaseStudy = {
   clientNote?: string;
   relatedLab?: { label: string };
   /** Screenshot used as the card thumbnail instead of the generated architecture thumbnail. */
-  cover?: { src: string; alt: string };
+  cover?: { src: string; alt: string; /** True when the image is made artwork, not a screenshot; the card says so. */ illustration?: boolean };
   /** Real screenshots of the running project, shown on its case-study page only. */
   gallery?: { src: string; alt: string; caption: string; width?: number; height?: number }[];
+  /** Heading of the gallery section; defaults to "Screenshots". */
+  galleryTitle?: string;
   /** Note shown under the gallery, e.g. what data the screenshots show. */
   galleryNote?: string;
 };
@@ -193,7 +195,24 @@ export const CASE_STUDIES: CaseStudy[] = [
     limitations: ["Desktop (Tkinter) application with a local MySQL dependency; not a hosted service."],
     future: [],
     evidence:
-      "Verified from the public README and source file layout. I have not executed the project for this page.",
+      "Verified from the public README and source file layout. I have not executed the project for this page. The repository has no screenshots, so the image here is an illustration I made, not a capture of the app.",
+    cover: {
+      src: "/images/projects/emv-smart-card/illustration.png",
+      alt: "Illustration of a dummy EMV card feeding a transaction-analysis panel with a cryptogram, an anomaly-score chart and a low-to-high risk gauge",
+      illustration: true,
+    },
+    galleryTitle: "Illustration",
+    gallery: [
+      {
+        src: "/images/projects/emv-smart-card/illustration.png",
+        alt: "Illustration of a dummy EMV card feeding a transaction-analysis panel with a cryptogram, an anomaly-score chart and a low-to-high risk gauge",
+        caption: "The idea of the project: a simulated card transaction is checked and scored for anomalies, then classified as low, medium or high risk.",
+        width: 1600,
+        height: 900,
+      },
+    ],
+    galleryNote:
+      "This is an illustration made for this page, not a screenshot of the app. All values in it are invented, and the desktop dashboard looks different.",
   },
   {
     slug: "fidxdft-digital-forensics-toolkit",

@@ -168,7 +168,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
         </Section>
 
         {gallery.length > 0 && (
-          <Section title="Screenshots">
+          <Section title={study.galleryTitle ?? "Screenshots"}>
             <ul className={single ? (portrait ? "max-w-md" : undefined) : "grid gap-5 sm:grid-cols-2"}>
               {gallery.map((shot, i) => (
                 <li key={shot.src} className={!single && i === 0 ? "sm:col-span-2" : undefined}>
@@ -177,7 +177,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
                       href={shot.src}
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label={`Open full-size screenshot: ${shot.caption}`}
+                      aria-label={`Open full-size image: ${shot.caption}`}
                       className="block overflow-hidden rounded-xl border border-border/60 bg-card/50 transition-colors hover:border-brand/40 focus-visible:ring-2 focus-visible:ring-ring"
                     >
                       <Image
