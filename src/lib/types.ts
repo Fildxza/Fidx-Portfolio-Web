@@ -46,8 +46,8 @@ export type FeaturedProject = {
   repoUrl: string | null;
   liveUrl: string | null;
   imageUrl: string | null;
-  /** True when imageUrl is made artwork rather than a screenshot. */
-  imageIsIllustration: boolean;
+  /** Label shown on the card when imageUrl is not a screenshot (e.g. a photo or illustration). */
+  imageTag: string | null;
   stars: number | null;
   lastUpdated: string | null;
   isPrivate: boolean;

@@ -44,7 +44,7 @@ export function buildFeaturedProjects(
       repoUrl: isPrivate ? null : (liveRepo?.html_url ?? manual?.repo_url ?? null),
       liveUrl: study?.liveUrl ?? manual?.live_url ?? liveRepo?.homepage ?? null,
       imageUrl: study?.cover?.src ?? manual?.image_url ?? null,
-      imageIsIllustration: study?.cover?.illustration ?? false,
+      imageTag: study?.cover?.tag ?? null,
       stars: liveRepo ? liveRepo.stargazers_count : null,
       lastUpdated: liveRepo?.pushed_at ?? null,
       isPrivate,

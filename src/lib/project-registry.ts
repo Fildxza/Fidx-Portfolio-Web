@@ -62,7 +62,7 @@ export type CaseStudy = {
   clientNote?: string;
   relatedLab?: { label: string };
   /** Screenshot used as the card thumbnail instead of the generated architecture thumbnail. */
-  cover?: { src: string; alt: string; /** True when the image is made artwork, not a screenshot; the card says so. */ illustration?: boolean };
+  cover?: { src: string; alt: string; /** Short label shown on the card when the image is not a screenshot, e.g. "Photo". */ tag?: string };
   /** Real screenshots of the running project, shown on its case-study page only. */
   gallery?: { src: string; alt: string; caption: string; width?: number; height?: number }[];
   /** Heading of the gallery section; defaults to "Screenshots". */
@@ -199,7 +199,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     cover: {
       src: "/images/projects/emv-smart-card/illustration.png",
       alt: "Illustration of a dummy EMV card feeding a transaction-analysis panel with a cryptogram, an anomaly-score chart and a low-to-high risk gauge",
-      illustration: true,
+      tag: "Illustration",
     },
     galleryTitle: "Illustration",
     gallery: [
@@ -270,7 +270,24 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     future: [],
     evidence:
-      "Verified from the public README and source tree: all six module files, a GUI entry point, six matching test files and a CI workflow are present. I have not executed the toolkit for this page.",
+      "Verified from the public README and source tree: all six module files, a GUI entry point, six matching test files and a CI workflow are present. I have not executed the toolkit for this page. The photo shows my forensics workstation rather than the toolkit's own interface.",
+    cover: {
+      src: "/images/projects/fidxdft/photo-cover.jpg",
+      alt: "Photo of a forensics workstation: Wireshark capturing traffic and a Tor status monitor on a Parrot OS desktop, with a terminal logging a hashing run",
+      tag: "Photo",
+    },
+    galleryTitle: "Photo",
+    gallery: [
+      {
+        src: "/images/projects/fidxdft/photo.jpg",
+        alt: "Monitor showing Wireshark capturing packets and a Tor status monitor on a Parrot OS desktop, above a backlit keyboard",
+        caption: "My forensics workstation: Wireshark and a Tor status monitor on Parrot OS. The terminal at the bottom right logs a Python run in a Digital Forensics Toolkit folder, calculating file hashes.",
+        width: 1160,
+        height: 1040,
+      },
+    ],
+    galleryNote:
+      "A photo of my workspace, cropped to the main monitor. It is not a screenshot of the toolkit's interface. Select the image to open it full size.",
     relatedLab: { label: "See hashing and signature checks in the Forensics Lab" },
   },
   {
@@ -361,12 +378,34 @@ export const CASE_STUDIES: CaseStudy[] = [
       { name: "Hand-gesture recognition", status: "prototype" },
       { name: "HUD overlay rendering", status: "prototype" },
       { name: "Mood detection", status: "experimental", detail: "Listed in the repository description; not independently reviewed for this page." },
+      {
+        name: "Object detection with labelled boxes",
+        status: "experimental",
+        detail: "Visible in a photo of the app running, but not in the public repository, which only uses MediaPipe face and hand landmarkers.",
+      },
     ],
     security: [],
     limitations: ["The README is still the default Vite template, so setup and usage are not documented yet."],
     future: [],
     evidence:
-      "Verified from the repository description and source file layout. I have not executed the app for this page.",
+      "Verified from the repository description and source file layout, plus a photo of the app running on my laptop. I have not executed the app for this page.",
+    cover: {
+      src: "/images/projects/neuro-track/photo-cover.jpg",
+      alt: "Photo of a laptop running Neuro-Track: the SENTINEL OS heads-up display over a webcam feed, with tracking boxes, gesture labels and a live telemetry panel",
+      tag: "Photo",
+    },
+    galleryTitle: "Photo",
+    gallery: [
+      {
+        src: "/images/projects/neuro-track/photo.jpg",
+        alt: "Laptop screen showing the SENTINEL OS heads-up display over a webcam feed, with person, cell phone and chair boxes, gesture labels and a live telemetry panel, beside VS Code with the Neuro-Track project open",
+        caption: "The app running on my laptop: the SENTINEL OS display over the webcam feed, with gesture labels, tracking boxes and a live telemetry panel, and the project open in VS Code.",
+        width: 1600,
+        height: 956,
+      },
+    ],
+    galleryNote:
+      "A photo of my laptop, cropped to the screen. The object-detection boxes and the objects counter in it are not in the public repository, which only has MediaPipe face and hand tracking; the photo comes from a working copy with uncommitted changes. Select the image to open it full size.",
   },
   {
     slug: "ops-mission-control",

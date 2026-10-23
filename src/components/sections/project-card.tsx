@@ -34,9 +34,9 @@ export function ProjectCard({ project }: { project: FeaturedProject }) {
           className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/0 to-black/0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         />
 
-        {project.imageUrl && project.imageIsIllustration && (
+        {project.imageUrl && project.imageTag && (
           <div className="absolute bottom-3 left-3 rounded-full bg-background/80 px-2.5 py-1 text-xs font-medium backdrop-blur">
-            Illustration
+            {project.imageTag}
           </div>
         )}
 
