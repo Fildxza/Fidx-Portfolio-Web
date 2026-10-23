@@ -772,7 +772,24 @@ export const CASE_STUDIES: CaseStudy[] = [
     limitations: ["A front-end prototype with no backend, so balances, payments and parent notifications are simulated."],
     future: [],
     evidence:
-      "Verified from the public repository: its TODO file, README and the source for the components and pages. I have not executed the app for this page.",
+      "Verified from the public repository: its TODO file, README and the source for the components and pages. I have not executed the app for this page. The repository has no screenshots, so the image here is an illustration I made, not a capture of the app.",
+    cover: {
+      src: "/images/projects/nuha-wallet/illustration.png",
+      alt: "Illustration of a smiling wallet character with falling star coins, a piggy bank, a savings-goal progress ring, a QR tile, send and request buttons and a heart location pin",
+      tag: "Illustration",
+    },
+    galleryTitle: "Illustration",
+    gallery: [
+      {
+        src: "/images/projects/nuha-wallet/illustration.png",
+        alt: "Illustration of a smiling wallet character with falling star coins, a piggy bank, a savings-goal progress ring, a QR tile, send and request buttons and a heart location pin",
+        caption: "The idea of the project: a friendly wallet for children, with saving, sending and requesting money, QR payment and a parent view.",
+        width: 1600,
+        height: 900,
+      },
+    ],
+    galleryNote:
+      "This is an illustration made for this page, not a screenshot of the app. The real app is a front-end prototype: the QR code and figures here are decorative, no payment is processed, and the parent view is only a browser-location concept.",
   },
   {
     slug: "ghost-cyber-intelligence-workstation",
