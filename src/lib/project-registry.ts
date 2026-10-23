@@ -139,6 +139,10 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     galleryNote:
       "The map shows simulated breach incidents from demo-data mode, not real people's data. Select the image to open it full size.",
+    cover: {
+      src: "/images/projects/bocorcheck/dashboard-cover.jpg",
+      alt: "BocorCheck Global Breach Heatmap over Malaysia with risk markers, a Pulau Pinang popup and summary figures",
+    },
   },
   {
     slug: "emv-smart-card-security-analysis",
@@ -641,7 +645,22 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     future: ["A custom domain and lead tracking, both listed in the project's own roadmap documents."],
     evidence:
-      "Verified from the public README, the project's documentation, content files and test files, plus a check of the live site on 21 Oct 2026: it responds, defaults to Bahasa Melayu, and serves structured data, robots.txt and a sitemap.",
+      "Verified from the public README, the project's documentation, content files and test files, plus a check of the live site on 21 Oct 2026: it responds, defaults to Bahasa Melayu, and serves structured data, robots.txt and a sitemap. The screenshot is a capture of the live site's homepage.",
+    cover: {
+      src: "/images/projects/aj-airconditioning/hero.png",
+      alt: "AJ Airconditioning Services homepage hero: the headline 'Cold air, done right' beside a technician servicing a ceiling cassette unit, with a starting price card",
+    },
+    gallery: [
+      {
+        src: "/images/projects/aj-airconditioning/hero.png",
+        alt: "Homepage hero with the headline 'Cold air, done right', a Book Now button, a BM/EN language switch and a photograph of a technician servicing a ceiling cassette unit",
+        caption: "Homepage hero on the live site, in English, with the BM/EN switch and the booking button in the header.",
+        width: 1699,
+        height: 859,
+      },
+    ],
+    galleryNote:
+      "Screenshot of the live site's homepage. The photograph is the business's own. Select the image to open it full size.",
   },
   {
     slug: "nuha-money-management",

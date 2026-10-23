@@ -73,6 +73,11 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
   const liveRepoUrl = resolveRepoUrl(found, await getGithubRepos());
   const study = { ...found, repoUrl: liveRepoUrl, visibility: liveRepoUrl ? ("public" as const) : ("private" as const) };
 
+  const gallery = study.gallery ?? [];
+  const single = gallery.length === 1;
+  // A lone portrait screenshot is shown narrow; a lone landscape one uses the full column.
+  const portrait = single && (gallery[0].height ?? GALLERY_IMAGE_SIZE.height) > (gallery[0].width ?? GALLERY_IMAGE_SIZE.width);
+
   const all = publishedCaseStudies();
   const index = all.findIndex((c) => c.slug === study.slug);
   const next = all[(index + 1) % all.length];
@@ -162,11 +167,11 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
           <p className="text-sm leading-relaxed text-muted-foreground">{study.overview}</p>
         </Section>
 
-        {study.gallery && study.gallery.length > 0 && (
+        {gallery.length > 0 && (
           <Section title="Screenshots">
-            <ul className={study.gallery.length === 1 ? "max-w-md" : "grid gap-5 sm:grid-cols-2"}>
-              {study.gallery.map((shot, i) => (
-                <li key={shot.src} className={study.gallery!.length > 1 && i === 0 ? "sm:col-span-2" : undefined}>
+            <ul className={single ? (portrait ? "max-w-md" : undefined) : "grid gap-5 sm:grid-cols-2"}>
+              {gallery.map((shot, i) => (
+                <li key={shot.src} className={!single && i === 0 ? "sm:col-span-2" : undefined}>
                   <figure className="flex flex-col gap-2">
                     <a
                       href={shot.src}
@@ -181,8 +186,10 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
                         width={shot.width ?? GALLERY_IMAGE_SIZE.width}
                         height={shot.height ?? GALLERY_IMAGE_SIZE.height}
                         sizes={
-                          study.gallery!.length === 1
-                            ? "(min-width: 448px) 448px, 100vw"
+                          single
+                            ? portrait
+                              ? "(min-width: 448px) 448px, 100vw"
+                              : "(min-width: 768px) 768px, 100vw"
                             : i === 0
                               ? "(min-width: 768px) 768px, 100vw"
                               : "(min-width: 768px) 372px, 100vw"
