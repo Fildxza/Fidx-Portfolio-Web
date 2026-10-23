@@ -338,7 +338,24 @@ export const CASE_STUDIES: CaseStudy[] = [
     limitations: ["A prototype that works with simulated data rather than real case records."],
     future: [],
     evidence:
-      "Verified from the public README and the app's route and component files. Marketing-style outcome claims in the README are deliberately not repeated here, and I have not executed the app for this page.",
+      "Verified from the public README and the app's route and component files. Marketing-style outcome claims in the README are deliberately not repeated here, and I have not executed the app for this page. The image here is an illustration I made, not a capture of the app.",
+    cover: {
+      src: "/images/projects/justice-for-wildlife/illustration.png",
+      alt: "Illustration of a shield with a tiger face and a scales-of-justice icon beside cards for a hotspot map, a case archive and a chat widget",
+      tag: "Illustration",
+    },
+    galleryTitle: "Illustration",
+    gallery: [
+      {
+        src: "/images/projects/justice-for-wildlife/illustration.png",
+        alt: "Illustration of a shield with a tiger face and a scales-of-justice icon beside cards for a hotspot map, a case archive and a chat widget",
+        caption: "The idea of the project: a case archive, species briefings, a hotspot map and a chat assistant for wildlife-crime work, under a tiger-and-scales emblem.",
+        width: 1600,
+        height: 900,
+      },
+    ],
+    galleryNote:
+      "This is an illustration made for this page, not a screenshot of the app. The emblem is my own artwork, not an official badge of any agency, and the rows and map markers are invented; the real app is a prototype that works with simulated data.",
   },
   {
     slug: "neuro-track",
@@ -601,7 +618,24 @@ export const CASE_STUDIES: CaseStudy[] = [
     limitations: ["Hardware behaviour has not been verified for this page; the README labels the project educational."],
     future: [],
     evidence:
-      "Verified from the public README and the presence of the backend files. I have not executed the software or tested it with hardware.",
+      "Verified from the public README and the presence of the backend files. I have not executed the software or tested it with hardware. The repository has no screenshots, so the image here is an illustration I made, not a capture of the app.",
+    cover: {
+      src: "/images/projects/drone-bait-deployer/illustration.png",
+      alt: "Illustration of a quadcopter seen from above on a radar-style display, flying a dashed path to a drop zone where a payload descends under a parachute, beside a telemetry panel",
+      tag: "Illustration",
+    },
+    galleryTitle: "Illustration",
+    gallery: [
+      {
+        src: "/images/projects/drone-bait-deployer/illustration.png",
+        alt: "Illustration of a quadcopter seen from above on a radar-style display, flying a dashed path to a drop zone where a payload descends under a parachute, beside a telemetry panel",
+        caption: "The idea of the project: a drone follows a path to a drop zone and releases a payload, while a dashboard shows telemetry and the link to the Arduino controller.",
+        width: 1600,
+        height: 900,
+      },
+    ],
+    galleryNote:
+      "This is an illustration made for this page, not a screenshot of the app. It is styled as a tactical heads-up display for effect; the real dashboard looks different, the telemetry values are invented, and the project is an educational prototype whose hardware behaviour has not been verified here.",
   },
   {
     slug: "smart-focus-camera",
