@@ -1,4 +1,4 @@
-import { EXTRA_GITHUB_REPOS, siteConfig } from "@/lib/constants";
+import { siteConfig } from "@/lib/constants";
 import type { GithubRepo, GithubStats } from "@/lib/types";
 
 const GITHUB_API = "https://api.github.com";
@@ -88,33 +88,17 @@ async function fetchAllRepos(username: string): Promise<GithubRepo[] | null> {
   }
 }
 
-/** Single-repo lookup for EXTRA_GITHUB_REPOS; null if it is private, missing or unreachable. */
-async function fetchExtraRepo(owner: string, name: string): Promise<GithubRepo | null> {
-  try {
-    const res = await fetch(`${GITHUB_API}/repos/${owner}/${name}`, {
-      headers: authHeaders(),
-      next: { revalidate: 3600 },
-    });
-    if (!res.ok) return null;
-    const repo = (await res.json()) as GithubRepo & { private?: boolean };
-    return repo.private ? null : repo;
-  } catch {
-    return null;
-  }
-}
-
 export async function getGithubRepos(
   username: string = siteConfig.githubUsername
 ): Promise<GithubRepo[]> {
-  const [repos, pinnedNames, extraRepos] = await Promise.all([
+  const [repos, pinnedNames] = await Promise.all([
     fetchAllRepos(username),
     fetchPinnedRepoNames(username),
-    Promise.all(EXTRA_GITHUB_REPOS.map((r) => fetchExtraRepo(r.owner, r.name))),
   ]);
   if (!repos) return [];
 
   const pinnedSet = new Set(pinnedNames);
-  const visible = [...repos, ...extraRepos.filter((r): r is GithubRepo => r !== null)]
+  const visible = repos
     .filter((r) => !r.fork && !r.archived)
     .map((r) => ({ ...r, pinned: pinnedSet.has(r.name) }));
 

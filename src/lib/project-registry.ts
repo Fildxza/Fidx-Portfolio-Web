@@ -706,8 +706,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     categories: ["Cybersecurity", "Digital Forensics"],
     status: "v0.1 workstation",
     visibility: "public",
-    repoUrl: "https://github.com/fxfanxy/Ghost-Cyber-Intelligence-Workstation",
-    repoOwner: "fxfanxy",
+    repoUrl: "https://github.com/Fildxza/Ghost-Cyber-Intelligence-Workstation",
+    repoOwner: "Fildxza",
     contributionType: "owner",
     liveUrl: null,
     featured: true,
@@ -773,7 +773,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       "Validate the active TLS and HTTP steps against an authorised live target.",
     ],
     evidence:
-      "Verified from the public README, the source tree and the project's own screenshots, which the README describes as real captures of the running app. The README reports 71 backend tests, 16 frontend tests and a 23-step browser journey; I have not run them or the app for this page. Hosted under my second GitHub account, fxfanxy.",
+      "Verified from the public README, the source tree and the project's own screenshots, which the README describes as real captures of the running app. The README reports 71 backend tests, 16 frontend tests and a 23-step browser journey; I have not run them or the app for this page.",
     galleryNote:
       "Captured from the running app, using sample data created through the app itself. Select an image to open it full size.",
     cover: {
@@ -817,6 +817,140 @@ export const CASE_STUDIES: CaseStudy[] = [
         caption: "Operations: every investigation is a tracked job with a lifecycle and the findings it produced.",
       },
     ],
+  },
+  {
+    slug: "arrow-space-studio-website",
+    repoName: "ArrowSpaceStudio_WebApp",
+    title: "Arrow Space Studio Website",
+    summary:
+      "A bilingual (Bahasa Melayu and English) one-page website for a Kuala Lumpur mural art studio, with a 26-photo filterable gallery and a WhatsApp-first enquiry flow. In development and not yet launched.",
+    categories: ["Web Applications"],
+    status: "In development",
+    visibility: "public",
+    repoUrl: "https://github.com/Fildxza/ArrowSpaceStudio_WebApp",
+    repoOwner: "Fildxza",
+    contributionType: "owner",
+    liveUrl: null,
+    featured: false,
+    published: true,
+    clientNote:
+      "Built for Arrow Space Studio, a mural art studio in Kuala Lumpur. The site has not been launched, and some details on it are placeholders until the client supplies the final information.",
+    overview:
+      "A single-route site, pre-rendered to static HTML, that presents the studio's space, galaxy, neon and themed-room murals and lets visitors start an enquiry through WhatsApp. All client content lives in a few configuration files, so it can change without touching layout code.",
+    problem:
+      "Homeowners, parents and businesses looking for a mural want to see the studio's work by theme and make a first enquiry quickly, usually from a phone and often in Bahasa Melayu. The client had no website and had not yet supplied all of the final company details, so the site also had to stay honest about what was still pending.",
+    audience: [
+      "Homeowners and parents looking for a mural for a room, ceiling or feature wall",
+      "Cafés, shops and studios commissioning a themed wall",
+      "Visitors in Malaysia, in Bahasa Melayu or English",
+    ],
+    contribution:
+      "Repository owner. The repository contains the site, bilingual interface strings, the image-optimisation script, 79 automated tests (as reported in the README) and project documentation: design notes, an owner guide, a status checklist and a record of where each photograph came from.",
+    architecture: {
+      caption: "How the site is organised, from the repository README and source layout.",
+      nodes: [
+        { label: "Config files", detail: "Company details, services, portfolio, testimonials and SEO settings sit in typed TypeScript files, separate from the components." },
+        { label: "Bilingual strings", detail: "Bahasa Melayu and English interface text is typed, so a missing translation fails the build and the tests." },
+        { label: "Static prerender", detail: "TanStack Start renders the single route to static HTML at build time, so any static host can serve it." },
+        { label: "Gallery and viewer", detail: "26 photographs with category filters and a project viewer built on the native dialog element." },
+        { label: "WhatsApp flow", detail: "A quick-chat panel and a brief builder compose a prepared message and open WhatsApp with it filled in." },
+        { label: "Image pipeline", detail: "A build script generates WebP sizes and a manifest, so the browser downloads only the size it needs." },
+      ],
+    },
+    decisions: [
+      "Make enquiries WhatsApp-first: the visitor presses Send on WhatsApp themselves, and nothing is sent automatically or posted to a server.",
+      "Keep all client content in configuration files so the owner's updates do not touch component code.",
+      "Add a demo/live switch so details the client has not supplied are replaced by stand-ins in demo and hidden in live, and set the site to noindex until launch.",
+      "Pre-render to static HTML so the site can be hosted on any static host without a server.",
+      "Keep content visible without JavaScript and with reduced motion.",
+    ],
+    stack: ["React 19", "TypeScript", "TanStack Start", "Vite", "Tailwind CSS v4", "Vitest", "Testing Library", "sharp"],
+    features: [
+      { name: "Single-page site: hero, services, selected work, process, About, contact and location sections", status: "implemented" },
+      { name: "26-photo gallery with category filters and a keyboard- and swipe-friendly project viewer", status: "implemented" },
+      { name: "Bahasa Melayu / English toggle with browser-language detection and a saved choice", status: "implemented" },
+      { name: "WhatsApp quick-chat panel and project brief builder", status: "implemented", detail: "Opens WhatsApp with the message filled in; the brief can also be copied." },
+      { name: "Responsive WebP images generated at build time", status: "implemented" },
+      { name: "Accessibility basics: skip link, landmarks, visible focus and reduced-motion support", status: "implemented", detail: "Checked in code, tests and an Edge browser run; no screen-reader walkthrough has been done." },
+      { name: "Process before/after slider", status: "implemented", detail: "Currently shows AI-generated concept imagery, not the studio's work." },
+      { name: "Email delivery of enquiries", status: "planned", detail: "No form back end exists; the README lists it as needing an external service." },
+      { name: "Analytics and individual project pages", status: "planned" },
+    ],
+    security: [
+      "No environment variables, API keys or secrets are used.",
+      "Enquiries are not posted to a server; the brief only opens WhatsApp with a prepared message or is copied by the visitor.",
+      "Photographs were reviewed for privacy: the source notes record that children's names were removed from a flag and a car number plate was cropped out.",
+    ],
+    limitations: [
+      "Not deployed: no hosting account is connected and there is no public URL yet.",
+      "The contact email, testimonials and client logos on the page are placeholders, and the site is set to noindex until launch.",
+      "Portfolio photographs are the studio's own work shown as previews pending the owner's approval, and they were enlarged with an AI upscaler, so the added sharpness is reconstructed rather than captured.",
+      "Lighthouse results, real-device testing on iOS and Android and a screen-reader walkthrough have not been done.",
+    ],
+    future: [
+      "Replace the placeholder content with the client's approved details, photographs and testimonials, then launch on a final domain.",
+      "Add individual project pages, an email form back end and analytics if the client wants them.",
+      "Self-host the fonts for a faster first paint.",
+    ],
+    evidence:
+      "Verified from the public README, the project status document and the screenshots, which the README describes as genuine captures of the local dev build on 22 Oct 2026. The README reports a passing type-check, lint, 79 tests and a production build; I have not re-run them for this page. Studio details in the screenshots are the studio's own public business details.",
+    cover: {
+      src: "/images/projects/arrow-space-studio/hero.png",
+      alt: "Arrow Space Studio homepage hero: the headline 'Walls With a Story' beside a photograph of a galaxy-painted ceiling",
+    },
+    gallery: [
+      {
+        src: "/images/projects/arrow-space-studio/hero.png",
+        alt: "Homepage hero with the headline 'Walls With a Story', a top bar with contact channels and a photograph of a galaxy-painted ceiling",
+        caption: "Homepage hero, in English.",
+        width: 1440,
+        height: 900,
+      },
+      {
+        src: "/images/projects/arrow-space-studio/hero-bm.png",
+        alt: "The same homepage hero shown in Bahasa Melayu",
+        caption: "The same hero in Bahasa Melayu, switched from the header toggle.",
+        width: 1440,
+        height: 900,
+      },
+      {
+        src: "/images/projects/arrow-space-studio/services.png",
+        alt: "Services section listing space and galaxy murals, neon and UV glow effects and themed rooms, each with an enquiry link",
+        caption: "Services, each with an enquiry link that preselects the topic in the chat.",
+        width: 1440,
+        height: 900,
+      },
+      {
+        src: "/images/projects/arrow-space-studio/selected-work.png",
+        alt: "Selected work gallery with category filters and project tiles",
+        caption: "Selected work: 26 photographs with category filters and counts.",
+        width: 1440,
+        height: 900,
+      },
+      {
+        src: "/images/projects/arrow-space-studio/project-viewer.png",
+        alt: "Project viewer showing one photograph with its title, description and previous and next buttons",
+        caption: "Project viewer opened from the gallery, with keyboard and swipe navigation.",
+        width: 1440,
+        height: 900,
+      },
+      {
+        src: "/images/projects/arrow-space-studio/process.png",
+        alt: "Process section showing five stages: discover, concept, plan, create and reveal",
+        caption: "Process: five stages from first conversation to the finished wall.",
+        width: 1440,
+        height: 900,
+      },
+      {
+        src: "/images/projects/arrow-space-studio/whatsapp-chat.png",
+        alt: "WhatsApp quick-chat panel with quick replies and a prepared message over the contact section",
+        caption: "WhatsApp quick-chat: pick a topic, review the prepared message, then press Send on WhatsApp.",
+        width: 1440,
+        height: 900,
+      },
+    ],
+    galleryNote:
+      "Captured from the local development build on 22 Oct 2026. The artwork photographs belong to Arrow Space Studio and are shown as previews pending its approval, and the contact email shown is a placeholder. Select an image to open it full size.",
   },
 ];
 
